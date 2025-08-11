@@ -6,6 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
+    "generate": "nuxt generate",
     "deploy": "npm run build && gh-pages -d .output/public --dotfiles"
   },
   "dependencies": {
