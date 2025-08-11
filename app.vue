@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { NuxtLink } from "#components";
+</script>
+
 <template>
   <div class="home-container">
     <div class="content">
@@ -6,6 +10,7 @@
       <div class="description">
         <p>Building digital experiences with modern web technologies. YAYYYY</p>
       </div>
+      <NuxtLink :to="'/projects'"> Projects </NuxtLink>
     </div>
   </div>
 </template>
@@ -17,7 +22,8 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
 }
 
 .content {
@@ -70,11 +76,11 @@
   .name {
     font-size: 2.5rem;
   }
-  
+
   .subtitle {
     font-size: 1.2rem;
   }
-  
+
   .description p {
     font-size: 1rem;
   }

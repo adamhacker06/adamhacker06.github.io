@@ -2,20 +2,22 @@
 export default defineNuxtConfig({
   // Disable SSR for static generation
   ssr: false,
-  
+
   // Configure for static hosting
   nitro: {
-    preset: 'static'
+    preset: "static",
   },
-  
+
   // App configuration
   app: {
-    baseURL: '/',
-    buildAssetsDir: '/_nuxt/'
+    baseURL: "/",
+    buildAssetsDir: "/_nuxt/",
   },
-  
+
   // Build configuration
   build: {
-    transpile: []
-  }
-})
+    transpile: [],
+  },
+
+  modules: ["@nuxtjs/tailwindcss"],
+});
