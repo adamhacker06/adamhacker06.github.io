@@ -4,7 +4,7 @@
       <h1 class="name">Adam Hacker</h1>
       <p class="subtitle">Developer & Creator</p>
       <div class="description">
-        <p>Building digital experiences with modern web technologies</p>
+        <p>Building digital experiences with modern web technologies. YAYYYY</p>
       </div>
     </div>
   </div>
