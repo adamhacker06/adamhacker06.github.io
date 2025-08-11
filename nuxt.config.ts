@@ -2,12 +2,6 @@
 export default defineNuxtConfig({
   ssr: true,
   app: {
-    // For user/organization pages (username.github.io), use '/'
     baseURL: '/'
-  },
-  nitro: {
-    prerender: {
-      routes: ['/']
-    }
   }
 })
