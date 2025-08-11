@@ -1,8 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
+  ssr: true,
   app: {
-    // Replace with your repo name if using a project page, or '/' for user/organization page
-    baseURL: '/adamhacker06.github.io/'
+    // For user/organization pages (username.github.io), use '/'
+    baseURL: '/'
+  },
+  nitro: {
+    prerender: {
+      routes: ['/']
+    }
   }
 })
