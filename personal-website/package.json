@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "adamhacker-website",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d .output/public --dotfiles"
   },
   "dependencies": {
     "nuxt": "^3.17.6",
