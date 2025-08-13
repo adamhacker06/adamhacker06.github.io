@@ -19,5 +19,16 @@ export default defineNuxtConfig({
     transpile: [],
   },
 
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/google-fonts"],
+
+  css: ["~/assets/css/main.css"],
+
+  googleFonts: {
+    families: {
+      Roboto: true,
+      "Martian Mono": [100, 800],
+    },
+    display: "swap",
+    download: true,
+  },
 });
