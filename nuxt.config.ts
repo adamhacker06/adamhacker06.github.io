@@ -10,8 +10,8 @@ export default defineNuxtConfig({
 
   // App configuration
   app: {
-    baseURL: "/",
-    buildAssetsDir: "/_nuxt/",
+    baseURL: process.env.NODE_ENV === 'production' ? '' : '/',
+    buildAssetsDir: "_nuxt/",
   },
 
   // Build configuration
