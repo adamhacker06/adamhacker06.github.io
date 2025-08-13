@@ -21,7 +21,7 @@ export default defineNuxtConfig({
 
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/google-fonts"],
 
-  css: ["~/app/assets/css/main.css"],
+  css: ["~/assets/css/main.css"],
 
   googleFonts: {
     families: {
