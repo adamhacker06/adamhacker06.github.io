@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // Disable SSR for static generation
-  ssr: false,
+  // ssr: false,
 
   // Configure for static hosting
   nitro: {
