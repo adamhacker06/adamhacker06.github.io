@@ -88,7 +88,7 @@ const components: HeaderComponents[] = [
     "https://www.reka-ui.com/logo.svg",
     [
       {
-        title: "my story",
+        title: "photography",
         href: "/me/story",
         description: "Return to the homepage.",
       },
