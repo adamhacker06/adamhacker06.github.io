@@ -1,0 +1,1 @@
+import{_ as o}from"./DlAUqK2U.js";import{x as t,y as e}from"./ATWDsbS4.js";const s={},c={class:"bg-slate-500 font-mono"};function r(n,a,p,_,f,i){return e(),t("div",c,"projects")}const l=o(s,[["render",r]]);export{l as default};

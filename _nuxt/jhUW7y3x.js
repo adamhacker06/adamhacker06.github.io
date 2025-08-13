@@ -1,0 +1,1 @@
+import{_ as s}from"./DlAUqK2U.js";import{x as t,D as a,z as o,y as c}from"./ATWDsbS4.js";const r={},n={class:"text-4xl italic"};function _(d,e){return c(),t("h1",n,e[0]||(e[0]=[a(" hey! ",-1),o("span",{class:"hero-sub"},"i'm adam",-1)]))}const m=s(r,[["render",_],["__scopeId","data-v-441c9275"]]);export{m as default};

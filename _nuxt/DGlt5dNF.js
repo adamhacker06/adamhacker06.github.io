@@ -1,0 +1,1 @@
+import{x as t,y as o,B as n,ac as c}from"./ATWDsbS4.js";import{_ as a}from"./DlAUqK2U.js";const r={};function s(_,p,m,f,u,i){const e=c;return o(),t("main",null,[n(e)])}const d=a(r,[["render",s]]);export{d as default};
