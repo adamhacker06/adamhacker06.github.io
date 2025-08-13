@@ -31,4 +31,9 @@ export default defineNuxtConfig({
     display: "swap",
     download: true,
   },
+
+  // Ensure proper static generation
+  experimental: {
+    payloadExtraction: false,
+  },
 });
