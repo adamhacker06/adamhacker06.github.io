@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     families: {
       Roboto: true,
       "Martian Mono": [100, 800],
+      "Titan One": true,
     },
     display: "swap",
     download: true,
