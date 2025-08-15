@@ -10,6 +10,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
+// Defines a unified structure of the header components, in order to iteratively build the navbar
 class HeaderComponents {
   public title: string;
   public description: string;
@@ -35,53 +36,57 @@ class HeaderComponents {
   }
 }
 
+// Builds the navbar components
 const components: HeaderComponents[] = [
+  // about me
   new HeaderComponents(
     "adam",
     "(about me 🙋‍♂️)",
     "https://www.reka-ui.com/logo.svg",
     [
       {
-        title: "my story",
+        title: "my experience",
+        href: "/me/experience",
+        description: "Education, work, and leadership.",
+      },
+      {
+        title: "my story & ambitions",
         href: "/me/story",
-        description: "Return to the homepage.",
+        description: "Goals, interests, and hobbies.",
       },
-      {
-        title: "my ambitions",
-        href: "/me/ambitions",
-        description: "Learn more about me.",
-      },
-      {
-        title: "contact me",
-        href: "/me/contact",
-        description: "Get in touch with me.",
-      },
+      // {
+      //   title: "contact me",
+      //   href: "/me/contact",
+      //   description: "Get in touch with me.",
+      // },
     ]
   ),
 
+  // projects
   new HeaderComponents(
     "hacker",
     "(projects 💻)",
     "https://www.reka-ui.com/logo.svg",
     [
       {
-        title: "my story",
-        href: "/me/story",
-        description: "Return to the homepage.",
+        title: "professional",
+        href: "/projects/professional",
+        description: "Consulting and internships.",
       },
       {
-        title: "my ambitions",
-        href: "/me/ambitions",
-        description: "Learn more about me.",
+        title: "personal",
+        href: "/projects/personal",
+        description: "Some of my ideas brought to life.",
       },
-      {
-        title: "contact me",
-        href: "/me/contact",
-        description: "Get in touch with me.",
-      },
+      // {
+      //   title: "contact me",
+      //   href: "/me/contact",
+      //   description: "Get in touch with me.",
+      // },
     ]
   ),
 
+  // other (photography, substack)
   new HeaderComponents(
     "etc.",
     "(other 📸)",
@@ -89,19 +94,19 @@ const components: HeaderComponents[] = [
     [
       {
         title: "photography",
-        href: "/me/story",
-        description: "Return to the homepage.",
+        href: "/other/photography",
+        description: "See the world through my lens.",
       },
       {
-        title: "my ambitions",
-        href: "/me/ambitions",
-        description: "Learn more about me.",
+        title: "substack",
+        href: "/other/substack",
+        description: "See what I'm up to.",
       },
-      {
-        title: "contact me",
-        href: "/me/contact",
-        description: "Get in touch with me.",
-      },
+      // {
+      //   title: "contact me",
+      //   href: "/me/contact",
+      //   description: "Get in touch with me.",
+      // },
     ]
   ),
 ];
@@ -127,11 +132,10 @@ const components: HeaderComponents[] = [
                 <ul
                   class="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[minmax(0,.75fr)_minmax(0,1fr)]"
                 >
-                  <li class="row-span-3">
+                  <li class="row-span-2">
                     <NavigationMenuLink as-child>
-                      <a
+                      <div
                         class="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/"
                       >
                         <img
                           src="https://www.reka-ui.com/logo.svg"
@@ -142,7 +146,7 @@ const components: HeaderComponents[] = [
                         Beautifully designed components built with Radix UI and
                         Tailwind CSS.
                       </p> -->
-                      </a>
+                      </div>
                     </NavigationMenuLink>
                   </li>
 
@@ -171,7 +175,7 @@ const components: HeaderComponents[] = [
         <NavigationMenuViewport />
       </NavigationMenu>
 
-      <div class="grow"></div>
+      <!-- <div class="grow"></div> -->
     </header>
 
     <slot />
