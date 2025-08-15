@@ -38,7 +38,7 @@ class HeaderComponents {
 const components: HeaderComponents[] = [
   new HeaderComponents(
     "adam",
-    "(about me🤸‍♂️)",
+    "(about me 🙋‍♂️)",
     "https://www.reka-ui.com/logo.svg",
     [
       {
@@ -110,7 +110,7 @@ const components: HeaderComponents[] = [
 <template>
   <div>
     <header
-      class="sticky top-0 left-0 right-0 z-50 flex w-full items-center justify-between p-4"
+      class="absolute top-0 left-0 right-0 z-50 flex w-full items-center justify-between p-4"
     >
       <div class="grow"></div>
 
