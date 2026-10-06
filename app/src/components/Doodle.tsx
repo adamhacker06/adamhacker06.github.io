@@ -13,6 +13,8 @@ const PATHS = {
   },
   ticks: { viewBox: '0 0 44 44', d: 'M38 40 L26 30 M22 42 L6 34 M40 24 L32 8' },
   arrow: { viewBox: '0 0 60 44', d: 'M56 5 C 38 2, 16 10, 9 36 M4 24 L9 37 L21 30' },
+  star: { viewBox: '0 0 44 44', d: 'M22 4 L27 16 L40 17 L30 26 L33 39 L22 32 L10 39 L14 26 L4 17 L17 16 Z' },
+  arrowRight: { viewBox: '0 0 60 44', d: 'M4 36 C 12 14, 34 8, 53 20 M40 10 L54 21 L42 32' },
 }
 
 type DoodleProps = {

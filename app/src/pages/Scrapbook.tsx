@@ -69,9 +69,11 @@ export default function Scrapbook() {
   // Cards glide to their new spots where the browser supports view transitions
   function show(next: Filter) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
-    document.documentElement.removeAttribute('data-dir')
     if (document.startViewTransition && !reduced) {
-      document.startViewTransition(() => flushSync(() => setFilter(next)))
+      const root = document.documentElement
+      root.setAttribute('data-filtering', '')
+      const transition = document.startViewTransition(() => flushSync(() => setFilter(next)))
+      transition.finished.finally(() => root.removeAttribute('data-filtering'))
     } else {
       setFilter(next)
     }
@@ -103,7 +105,7 @@ export default function Scrapbook() {
           <li
             key={item.id}
             className={item.album ? 'card album' : 'card'}
-            style={{ '--tilt': `${item.tilt}deg`, viewTransitionName: `card-${item.id}` } as CSSProperties}
+            style={{ '--tilt': `${item.tilt}deg`, '--vt': `card-${item.id}` } as CSSProperties}
           >
             <button type="button" onClick={() => setOpen(item)}>
               <Print item={item} />

@@ -130,19 +130,8 @@ a, button, .snap { cursor: url("./assets/cursors/arrow-active.svg") 9 8, pointer
 .nav li a:not([aria-current]):focus-visible .squiggle,
 .nav li a[aria-current] .loop { stroke-dashoffset: 0; }
 
-/* Changing tabs slides the page sideways; the nav and bars stay put */
-main { view-transition-name: page; }
-html[data-dir] .card { view-transition-name: none !important; }
-html[data-dir] ::view-transition-old(page),
-html[data-dir] ::view-transition-new(page) { animation: 0.32s cubic-bezier(0.3, 0, 0.2, 1) both; }
-html[data-dir="forward"] ::view-transition-old(page) { animation-name: slide-out-left; }
-html[data-dir="forward"] ::view-transition-new(page) { animation-name: slide-in-right; }
-html[data-dir="back"] ::view-transition-old(page) { animation-name: slide-out-right; }
-html[data-dir="back"] ::view-transition-new(page) { animation-name: slide-in-left; }
-@keyframes slide-out-left { to { transform: translateX(-100vw); } }
-@keyframes slide-in-right { from { transform: translateX(100vw); } }
-@keyframes slide-out-right { to { transform: translateX(100vw); } }
-@keyframes slide-in-left { from { transform: translateX(-100vw); } }
+/* Scrapbook cards only become separate transition layers while a filter is animating */
+html[data-filtering] .card { view-transition-name: var(--vt); }
 
 /* Dashed hand-drawn frame, rendered by <Frame> inside .framed */
 .framed { position: relative; }
@@ -180,25 +169,71 @@ html[data-dir="back"] ::view-transition-new(page) { animation-name: slide-in-lef
   min-height: 0;
 }
 
+/* Sits toward the top of the hero, roughly level with the top of the photo pile */
+.intro { align-self: start; padding-top: clamp(16px, 9vh, 96px); }
+
 .hero .hello { font-size: clamp(1.6rem, min(3vw, 4.5vh), 2.3rem); }
 .hero h1 { font-size: clamp(2.8rem, min(6.4vw, 11vh), 5.6rem); margin-bottom: 0.25em; }
 
-.roles {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: clamp(1.25rem, min(2.3vw, 4vh), 2rem);
-  line-height: 1.25;
-}
-.hero .more { font-size: clamp(1.7rem, min(3vw, 5vh), 2.5rem); margin-top: 4px; }
 
-.blurb { max-width: 34ch; margin: clamp(10px, 2.5vh, 24px) 0 clamp(8px, 2vh, 16px); }
+.blurb { max-width: 42ch; margin: clamp(10px, 2.5vh, 24px) 0 clamp(8px, 2vh, 16px); }
 
 .socials { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0; padding: 0; list-style: none; font-weight: 600; }
 .socials a { text-decoration-color: var(--amber); text-decoration-thickness: 3px; text-underline-offset: 5px; }
 .socials a:hover { text-decoration-color: var(--marker); }
+
+/* "Right now": a torn sheet of graph paper, drawn in the same flat style as the photos */
+.now {
+  --torn: polygon(0% 0%, 100% 0%, 99.5% 22%, 99.3% 47%, 98.9% 71%, 100% 91.9%, 96.6% 95.0%, 93.9% 94.1%, 90.2% 97.2%, 87.8% 91.8%, 85.4% 97.4%, 81.5% 89.0%, 77.0% 99.1%, 73.2% 95.3%, 70.6% 88.7%, 67.1% 89.2%, 64.5% 91.2%, 62.2% 93.6%, 59.0% 97.8%, 55.5% 95.5%, 52.1% 95.8%, 48.8% 91.6%, 44.2% 99.5%, 40.0% 96.3%, 37.0% 91.0%, 34.2% 89.3%, 30.1% 92.9%, 25.9% 92.8%, 21.4% 97.8%, 19.2% 90.8%, 14.8% 93.7%, 10.2% 92.9%, 7.9% 95.4%, 3.8% 91.5%, 1.4% 92.2%, 0% 94.9%);
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 345px);
+  margin: clamp(24px, 7vh, 62px) 0 0 clamp(0px, 2.6vw, 38px);
+  color: var(--ink);
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease-out;
+}
+.now:hover { transform: rotate(0deg); }
+/* Flat offset backing */
+.now::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  translate: 9px 9px;
+  background: var(--sky);
+  clip-path: var(--torn);
+}
+/* The navy sheet shows as a 2px outline around the paper, following the tear */
+.now .sheet { padding: 2px; background: var(--ink); clip-path: var(--torn); }
+.now .paper {
+  padding: 18px 26px 38px;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--sky) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--sky) 55%, transparent) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 9px 9px;
+  clip-path: var(--torn);
+}
+.now h2 { margin: 0 0 14px; font: inherit; font-size: 2.1rem; color: var(--marker); }
+.now ul { margin: 0; padding: 0; list-style: none; font-size: 1.6rem; line-height: 1.25; }
+/* Each line sits at its own angle and indent, like it was jotted down at a different time */
+.now li:nth-child(1) { transform: rotate(-1.5deg); margin-left: 12px; }
+.now li:nth-child(2) { transform: rotate(1.5deg); margin: 10px 6px 6px 0; font-size: 1.56rem; text-align: right; }
+.now li:nth-child(3) { transform: rotate(-2.5deg); margin-left: 58px; font-size: 1.64rem; }
+.now .paper { position: relative; }
+.now .star { position: absolute; top: 16px; right: 26px; width: 34px; height: auto; stroke-width: 2.5; transform: rotate(14deg); }
+.now .circled { position: relative; display: inline-block; }
+.now .circled .doodle {
+  position: absolute;
+  left: -18px;
+  top: -6px;
+  width: calc(100% + 36px);
+  height: calc(100% + 12px);
+  stroke-width: 2.5;
+}
+.now .circled .doodle path { vector-effect: non-scaling-stroke; }
 
 /* Scrapbook pile of photos; each .snap is placed by its own custom properties */
 .collage {
@@ -269,6 +304,7 @@ html[data-dir="back"] ::view-transition-new(page) { animation-name: slide-in-lef
 .collage .ticks { position: absolute; width: 44px; height: 44px; top: -3%; left: -8%; }
 .collage .ticks.br { top: auto; left: auto; bottom: 6%; right: -7%; transform: rotate(180deg); }
 .collage .arrow { position: absolute; width: 11%; height: auto; right: 17%; top: 19%; }
+.collage .arrow.two { right: auto; top: auto; left: -5.5%; bottom: 19%; width: 9.5%; }
 .collage .note { position: absolute; font-size: clamp(1.3rem, 2.4vw, 1.8rem); white-space: nowrap; }
 .collage .note.one { right: 4%; top: 11%; transform: rotate(6deg); }
 .collage .note.two { left: -10%; bottom: 12%; transform: rotate(-78deg); transform-origin: left bottom; }
@@ -401,6 +437,8 @@ dialog.viewer::backdrop { background: rgb(15 58 158 / 0.82); }
 
 @media (max-width: 760px) {
   .page.home { height: auto; }
+  .intro { padding-top: 0; }
+  .now { margin-left: 0; }
   .hero { grid-template-columns: 1fr; padding: 28px 12px 56px; gap: 56px; }
   .collage { width: min(86%, 420px); }
 }
