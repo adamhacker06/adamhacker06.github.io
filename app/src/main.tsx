@@ -5,6 +5,7 @@ import './styles.css'
 import Layout from './components/Layout.tsx'
 import ComingSoon from './pages/ComingSoon.tsx'
 import Scrapbook from './pages/Scrapbook.tsx'
+import Experience from './pages/Experience.tsx'
 import Home from './pages/Home.tsx'
 
 const router = createBrowserRouter([
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'about', element: <ComingSoon title="A bit about me" /> },
-      { path: 'experience', element: <ComingSoon title="Where I've worked" /> },
+      { path: 'experience', element: <Experience /> },
       { path: 'scrapbook', element: <Scrapbook /> },
       { path: '*', element: <ComingSoon title="Not found" /> },
     ],

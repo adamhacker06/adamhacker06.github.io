@@ -23,6 +23,11 @@ function NavMark() {
 export default function Layout() {
   const { pathname } = useLocation()
 
+  // A new page starts at the top, not wherever the last one was scrolled to
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
   // Keep the browser tab's title in step with the page; scripts/postbuild.mjs sets the same titles for crawlers
   useEffect(() => {
     const page = LINKS.find(({ to }) => to !== '/' && pathname.startsWith(to))

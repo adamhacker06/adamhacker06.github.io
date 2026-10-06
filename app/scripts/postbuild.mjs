@@ -10,7 +10,7 @@ const HOME_DESCRIPTION =
 
 const PAGES = [
   { path: 'about', title: 'About · Adam Hacker', description: 'About Adam Hacker, a UC Berkeley student in EECS, education and design.' },
-  { path: 'experience', title: 'Experience · Adam Hacker', description: 'Where Adam Hacker has worked and what he has built.' },
+  { path: 'experience', title: 'Experience · Adam Hacker', description: 'Where Adam Hacker has worked: product at Disney, engineering projects with Sony, Google and Adobe, and education research at UC Berkeley.' },
   {
     path: 'scrapbook',
     title: 'Scrapbook · Adam Hacker',

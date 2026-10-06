@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { flushSync } from 'react-dom'
+import { useLocation } from 'react-router-dom'
 import { Doodle, Underlined } from '../components/Doodle.tsx'
 import { ITEMS, KINDS } from '../data/scrapbook.ts'
 import type { Item, Kind, Photo } from '../data/scrapbook.ts'
@@ -214,7 +215,12 @@ function Viewer({ item, open, onClose }: { item: Item | null; open: boolean; onC
 
 export default function Scrapbook() {
   const [filter, setFilter] = useState<Filter>('all')
-  const [viewing, setViewing] = useState<{ item: Item | null; open: boolean }>({ item: null, open: false })
+  // A link such as /scrapbook#taiwan arrives with that item already open
+  const { hash } = useLocation()
+  const [viewing, setViewing] = useState<{ item: Item | null; open: boolean }>(() => {
+    const item = ITEMS.find((i) => i.id === hash.slice(1)) ?? null
+    return { item, open: item !== null }
+  })
 
   // Cards glide to their new spots where the browser supports view transitions
   function show(next: Filter) {

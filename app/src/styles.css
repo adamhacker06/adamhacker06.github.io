@@ -355,10 +355,94 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 }
 .collage .arrow { position: absolute; width: 11%; height: auto; right: 17%; top: 19%; }
 .collage .arrow.two { right: auto; top: auto; left: -5.5%; bottom: 19%; width: 9.5%; }
+/* Notes and arrows always sit above the photos, including while a photo is mid-hover */
+.collage .note, .collage .arrow { z-index: 3; }
 .collage .note { position: absolute; font-size: clamp(1.3rem, 2.4vw, 1.8rem); white-space: nowrap; }
 .collage .note.one { right: 4%; top: 11%; transform: rotate(6deg); }
 /* Sits to the left of the bottom photo, tilted up toward its arrow */
 .collage .note.two { right: 106.5%; top: 75.5%; transform: rotate(-12deg); transform-origin: right center; }
+
+/* ---------- Experience ---------- */
+.xp { width: min(100%, 940px); margin: 0 auto; padding: 0 clamp(8px, 3vw, 24px) 80px; }
+
+/* Three torn scraps with the headline facts */
+.xp-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px clamp(16px, 3vw, 30px);
+  margin: 38px 0 0;
+  padding: 0 8px 0 0;
+  list-style: none;
+}
+.xp-highlights li { transform: rotate(var(--tilt)); }
+.xp-highlights .paper { padding: 16px 18px 30px; }
+.xp-highlights strong { display: block; font-size: clamp(1.5rem, 3.2vw, 2rem); }
+.xp-highlights span span span { display: block; margin-top: 4px; font-size: 0.92rem; line-height: 1.4; }
+
+/* Timeline: a handwritten date and a snapshot on the left, a pen line down the middle, the entry on the right */
+.xp-timeline { margin: 56px 0 0; padding: 0; list-style: none; }
+.xp-entry { display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); }
+.xp-entry .side { padding: 0 26px 0 0; }
+.xp-entry .when { font-size: 1.45rem; text-align: right; white-space: nowrap; }
+/* Small framed snapshot in the same flat style as the home page photos */
+.xp-photo {
+  display: block;
+  width: min(100%, 172px);
+  max-height: 200px;
+  margin: 14px 0 34px auto;
+  object-fit: cover;
+  object-position: 50% 22%;
+  border: 2px solid var(--ink);
+  box-shadow: 7px 7px 0 var(--sky);
+  rotate: -2.5deg;
+  transition: rotate 0.3s ease-out;
+}
+.xp-entry:nth-child(even) .xp-photo { rotate: 2deg; }
+.xp-entry .xp-photo:hover { rotate: 0deg; }
+.xp-entry .what { position: relative; padding: 0 0 44px 30px; border-left: 2px solid var(--sky); }
+.xp-entry:last-child .what { padding-bottom: 8px; }
+/* The dot on the line: hollow for finished things, amber for anything still going */
+.xp-entry .what::before,
+.xp-entry .side::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 7px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+}
+.xp-entry .side::before { display: none; }
+.xp-entry.ongoing .what::before,
+.xp-entry.ongoing .side::before { background: var(--amber); }
+.xp-entry .kind { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--marker); }
+.xp-entry h2 { margin-top: 2px; font-size: clamp(1.25rem, 2.4vw, 1.5rem); line-height: 1.15; }
+.xp-entry .org { margin: 4px 0 0; font-weight: 600; }
+.xp-entry .org span { font-weight: 400; }
+.xp-entry .summary { margin: 10px 0 0; max-width: 62ch; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
+.tags li { padding: 1px 9px; font-size: 0.8rem; font-weight: 600; border: 1.5px solid var(--sky); }
+.xp-entry .aside { margin-top: 12px; font-size: 1.35rem; }
+.xp-entry .aside a { text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+.xp-school { margin-top: 64px; }
+.xp-school .bar { height: 10px; margin-bottom: 26px; }
+.xp-school h2 { font-size: 1.5rem; }
+.xp-school .hand { font-size: 1.45rem; margin: 2px 0 8px; }
+.xp-school p:not(.hand) { margin: 4px 0 0; max-width: 62ch; }
+
+@media (max-width: 640px) {
+  .xp-highlights { grid-template-columns: 1fr; padding-right: 10px; }
+  .xp-entry { grid-template-columns: 1fr; }
+  /* On a phone the date and photo stack above the text, all hanging off the same line */
+  .xp-entry .side { position: relative; padding: 0 0 4px 30px; border-left: 2px solid var(--sky); }
+  .xp-entry .side::before { display: block; top: 9px; }
+  .xp-entry .what::before { display: none; }
+  .xp-entry .when { text-align: left; }
+  .xp-photo { width: min(70%, 240px); max-height: 220px; margin: 8px 0 16px; }
+}
 
 /* ---------- Scrapbook ---------- */
 .section-head { text-align: center; padding: clamp(28px, 5vw, 56px) 16px 0; }
