@@ -20,6 +20,18 @@
 
 * { box-sizing: border-box; }
 
+/* Present for screen readers and search engines, not shown */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 html { -webkit-text-size-adjust: 100%; }
 
 body {
@@ -35,7 +47,7 @@ body {
 a { color: inherit; }
 
 /* Anything clickable swaps the marker arrow for the amber one */
-a, button, .snap { cursor: url("./assets/cursors/arrow-active.svg") 9 8, pointer; }
+a, button { cursor: url("./assets/cursors/arrow-active.svg") 9 8, pointer; }
 
 .page {
   min-height: 100dvh;
@@ -165,8 +177,21 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   min-height: 0;
 }
 
+/* Hand-drawn exclamation mark hanging off the end of the surname; it takes up no room in the line */
+.surname { position: relative; display: inline-block; }
+.bang {
+  position: absolute;
+  left: calc(100% + 0.06em);
+  top: -0.14em;
+  height: 1.12em;
+  width: auto;
+  stroke-width: 2.6;
+  transform: rotate(9deg);
+}
+.bang .solid { fill: currentColor; stroke-width: 1.5; }
+
 /* Sits toward the top of the hero, roughly level with the top of the photo pile */
-.intro { align-self: start; padding-top: clamp(16px, 9vh, 96px); }
+.intro { align-self: start; padding-top: clamp(12px, 6vh, 64px); }
 
 .hero .hello { font-size: clamp(1.6rem, min(3vw, 4.5vh), 2.3rem); }
 .hero h1 { font-size: clamp(2.8rem, min(6.4vw, 11vh), 5.6rem); margin-bottom: 0.12em; }
@@ -201,12 +226,15 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 .scrap { position: relative; isolation: isolate; }
 .now {
   width: min(100%, 345px);
-  margin: clamp(20px, 5.6vh, 52px) 0 0 clamp(0px, 2.6vw, 38px);
+  margin: clamp(14px, 4.2vh, 40px) 0 0 clamp(0px, 2.6vw, 38px);
   color: var(--ink);
+  /* The note hangs from its tape: it pivots about the top centre and swings a little past its
+     resting angle before settling, in both directions */
+  transform-origin: 50% 0;
   transform: rotate(-2deg);
-  transition: transform 0.3s ease-out;
+  transition: transform 0.55s cubic-bezier(0.34, 1.8, 0.5, 1);
 }
-.now:hover { transform: rotate(0deg); }
+.now:hover { transform: rotate(1deg); }
 /* Flat offset backing */
 .scrap::before {
   content: "";
@@ -229,6 +257,18 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   background-size: 20px 20px;
   background-position: 9px 9px;
   clip-path: var(--torn);
+}
+/* A sliver of tape holding the note to the page, with pinked ends */
+.now .tape {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  z-index: 1;
+  width: 62px;
+  height: 17px;
+  background: rgb(245 166 35 / 0.6);
+  clip-path: polygon(0 0, 100% 0, 96% 25%, 100% 50%, 96% 75%, 100% 100%, 0 100%, 4% 75%, 0 50%, 4% 25%);
+  transform: translateX(-50%) rotate(-4deg);
 }
 .now h2 { margin: 0 0 14px; font: inherit; font-size: 2.1rem; color: var(--marker); }
 .now ul { margin: 0; padding: 0; list-style: none; font-size: 1.6rem; line-height: 1.25; }
@@ -256,6 +296,8 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   width: min(100%, 72vh);
   aspect-ratio: 1 / 0.86;
   margin: 0;
+  /* Nudged right to give the exclamation mark by the name some room */
+  left: clamp(8px, 1.6vw, 24px);
   isolation: isolate;
 }
 /* Graph-paper patch behind the pile, fading out before it reaches the text */
@@ -282,14 +324,10 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   width: var(--w);
   aspect-ratio: var(--ratio);
   transform: rotate(var(--tilt));
-  /* On the way out, stay in front until the photo has settled back */
-  transition: transform 0.3s ease-out, z-index 0s 0.3s;
+  transition: transform 0.3s ease-out;
 }
-.snap:hover {
-  transform: rotate(0deg) scale(1.03);
-  z-index: 1;
-  transition: transform 0.3s ease-out, z-index 0s;
-}
+/* Hovering straightens a photo where it lies; the pile keeps its stacking order */
+.snap:hover { transform: rotate(0deg) scale(1.03); }
 .snap .photo {
   position: absolute;
   left: 0;
@@ -315,21 +353,23 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   z-index: 1;
   border: 2px solid var(--ink);
 }
-.collage .ticks { position: absolute; width: 44px; height: 44px; top: -3%; left: -8%; }
-.collage .ticks.br { top: auto; left: auto; bottom: 6%; right: -7%; transform: rotate(180deg); }
 .collage .arrow { position: absolute; width: 11%; height: auto; right: 17%; top: 19%; }
 .collage .arrow.two { right: auto; top: auto; left: -5.5%; bottom: 19%; width: 9.5%; }
 .collage .note { position: absolute; font-size: clamp(1.3rem, 2.4vw, 1.8rem); white-space: nowrap; }
 .collage .note.one { right: 4%; top: 11%; transform: rotate(6deg); }
-.collage .note.two { left: -10%; bottom: 12%; transform: rotate(-78deg); transform-origin: left bottom; }
+/* Sits to the left of the bottom photo, tilted up toward its arrow */
+.collage .note.two { right: 106.5%; top: 75.5%; transform: rotate(-12deg); transform-origin: right center; }
 
 /* ---------- Scrapbook ---------- */
 .section-head { text-align: center; padding: clamp(28px, 5vw, 56px) 16px 0; }
 .section-head h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
 .section-head .hand { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-top: 6px; }
+.section-head .hand.headline { font-size: clamp(2.3rem, 5vw, 3.3rem); margin-top: 0; }
 
 /* A livelier page header: a graph-paper patch behind the title and line-drawn stickers in the corners */
-.lively { position: relative; isolation: isolate; }
+.lively { position: relative; isolation: isolate; padding-top: clamp(14px, 2.6vw, 32px); }
+/* Headline and filters sit close together as one header; the wall starts after a clear gap */
+.lively + .filters { margin-top: 18px; }
 .lively::before {
   content: "";
   position: absolute;
@@ -401,7 +441,7 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   gap: 56px 48px;
   max-width: 1180px;
   margin: 0 auto;
-  padding: 48px clamp(16px, 4vw, 40px) 72px;
+  padding: 68px clamp(16px, 4vw, 40px) 72px;
   list-style: none;
 }
 
@@ -567,7 +607,9 @@ dialog.viewer.album { --stage: min(66dvh, 680px); width: min(1080px, calc(100vw 
   .intro { padding-top: 0; }
   .now { margin-left: 0; }
   .hero { grid-template-columns: 1fr; padding: 28px 12px 56px; gap: 56px; }
-  .collage { width: min(86%, 420px); }
+  .collage { width: min(86%, 420px); left: 0; }
+  /* No room beside the pile on a phone, so the note runs up the edge instead */
+  .collage .note.two { right: auto; top: auto; left: -10%; bottom: 12%; transform: rotate(-78deg); transform-origin: left bottom; }
 }
 
 @media (prefers-reduced-motion: reduce) {

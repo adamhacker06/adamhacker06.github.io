@@ -17,13 +17,14 @@ const ICONS: Record<Kind, string> = {
 }
 
 // Little line drawings pinned in the top corners of the page; purely decorative
+// They sit in two rows: level with the headline, and level with the filters
 const STICKERS = [
-  { name: 'camera', pen: 'blue', d: 'M8 22 H20 L25 14 H39 L44 22 H56 V50 H8 Z M32 45 A9.5 9.5 0 1 0 31.9 45', side: 'left', x: '9%', y: '14px', size: '68px', tilt: '-12deg', delay: '0.1s', bob: '5.5s' },
-  { name: 'star', pen: 'amber', d: 'M32 6 L39 24 L58 25 L43 38 L48 57 L32 46 L16 57 L21 38 L6 25 L25 24 Z', side: 'left', x: '19.5%', y: '98px', size: '34px', tilt: '12deg', delay: '0.5s', bob: '4.2s' },
-  { name: 'lantern', pen: 'blue', d: 'M32 4 V11 M24 11 H40 M23 17 C9 25, 9 41, 23 49 H41 C55 41, 55 25, 41 17 Z M32 17 V49 M26 49 V57 M32 49 V60 M38 49 V57', side: 'left', x: '4%', y: '124px', size: '52px', tilt: '8deg', delay: '0.8s', bob: '6.4s' },
-  { name: 'brick', pen: 'blue', d: 'M7 28 H57 V53 H7 Z M15 28 V18 H28 V28 M36 28 V18 H49 V28', side: 'right', x: '9.5%', y: '12px', size: '66px', tilt: '9deg', delay: '0.25s', bob: '6s' },
-  { name: 'plane', pen: 'amber', d: 'M6 30 L58 8 L40 56 L29 37 Z M29 37 L58 8', side: 'right', x: '20%', y: '92px', size: '46px', tilt: '-6deg', delay: '0.6s', bob: '4.6s' },
-  { name: 'sailboat', pen: 'blue', d: 'M32 7 V44 M35 11 L52 42 H35 Z M29 18 L15 42 H29 Z M9 48 H55 L48 57 H16 Z', side: 'right', x: '4%', y: '122px', size: '56px', tilt: '-7deg', delay: '0.9s', bob: '5.2s' },
+  { name: 'camera', pen: 'blue', d: 'M8 22 H20 L25 14 H39 L44 22 H56 V50 H8 Z M32 45 A9.5 9.5 0 1 0 31.9 45', side: 'left', x: '9%', y: '29px', size: '68px', tilt: '-12deg', delay: '0.1s', bob: '5.5s' },
+  { name: 'star', pen: 'amber', d: 'M32 6 L39 24 L58 25 L43 38 L48 57 L32 46 L16 57 L21 38 L6 25 L25 24 Z', side: 'left', x: '19.5%', y: '46px', size: '34px', tilt: '12deg', delay: '0.5s', bob: '4.2s' },
+  { name: 'lantern', pen: 'blue', d: 'M32 4 V11 M24 11 H40 M23 17 C9 25, 9 41, 23 49 H41 C55 41, 55 25, 41 17 Z M32 17 V49 M26 49 V57 M32 49 V60 M38 49 V57', side: 'left', x: '4%', y: '112px', size: '52px', tilt: '8deg', delay: '0.8s', bob: '6.4s' },
+  { name: 'brick', pen: 'blue', d: 'M7 28 H57 V53 H7 Z M15 28 V18 H28 V28 M36 28 V18 H49 V28', side: 'right', x: '9.5%', y: '30px', size: '66px', tilt: '9deg', delay: '0.25s', bob: '6s' },
+  { name: 'plane', pen: 'amber', d: 'M6 30 L58 8 L40 56 L29 37 Z M29 37 L58 8', side: 'right', x: '20%', y: '40px', size: '46px', tilt: '-6deg', delay: '0.6s', bob: '4.6s' },
+  { name: 'sailboat', pen: 'blue', d: 'M32 7 V44 M35 11 L52 42 H35 Z M29 18 L15 42 H29 Z M9 48 H55 L48 57 H16 Z', side: 'right', x: '4%', y: '110px', size: '56px', tilt: '-7deg', delay: '0.9s', bob: '5.2s' },
 ]
 
 // A card's face: the album cover if there is one, otherwise a placeholder block
@@ -242,8 +243,9 @@ export default function Scrapbook() {
             <path d={st.d} pathLength={1} />
           </svg>
         ))}
-        <h1 className="display">Scrapbook</h1>
-        <p className="hand">
+        {/* The circled tab already says "Scrapbook", so the page leads with the handwritten line instead */}
+        <h1 className="sr-only">Scrapbook</h1>
+        <p className="hand headline">
           <Underlined>stuff I've made and done!</Underlined>
         </p>
       </div>

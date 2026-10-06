@@ -12,8 +12,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'about', element: <ComingSoon title="About" /> },
-      { path: 'experience', element: <ComingSoon title="Experience" /> },
+      { path: 'about', element: <ComingSoon title="A bit about me" /> },
+      { path: 'experience', element: <ComingSoon title="Where I've worked" /> },
       { path: 'scrapbook', element: <Scrapbook /> },
       { path: '*', element: <ComingSoon title="Not found" /> },
     ],

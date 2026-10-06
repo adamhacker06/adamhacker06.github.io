@@ -6,10 +6,10 @@ import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 const SITE = 'https://adamhacker.dev/'
 const HOME_TITLE = 'Adam Hacker'
 const HOME_DESCRIPTION =
-  "Personal site of Adam Hacker, a UC Berkeley student in CS, education and design. Photography, projects and what I'm up to right now."
+  "Personal site of Adam Hacker, a UC Berkeley student in EECS, education and design. Photography, projects and what I'm up to right now."
 
 const PAGES = [
-  { path: 'about', title: 'About · Adam Hacker', description: 'About Adam Hacker, a UC Berkeley student in CS, education and design.' },
+  { path: 'about', title: 'About · Adam Hacker', description: 'About Adam Hacker, a UC Berkeley student in EECS, education and design.' },
   { path: 'experience', title: 'Experience · Adam Hacker', description: 'Where Adam Hacker has worked and what he has built.' },
   {
     path: 'scrapbook',

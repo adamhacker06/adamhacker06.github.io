@@ -42,11 +42,21 @@ export default function Home() {
     <main className="hero">
       <div className="intro">
         <p className="hand hello">hi, I'm</p>
-        <h1 className="display">Adam Hacker</h1>
+        <h1 className="display">
+          Adam{' '}
+          <span className="surname">
+            Hacker
+            {/* The doodled exclamation mark from the MLA title slide */}
+            <svg className="doodle amber bang" viewBox="0 0 60 110" aria-hidden="true">
+              <path d="M5 17 C 20 10, 42 6, 55 10 C 51 32, 39 62, 30 82 C 23 62, 14 36, 11 11" />
+              <path className="solid" d="M27 22 C 33 17, 42 16, 46 19 C 43 34, 36 54, 31 66 C 28 52, 26 36, 27 22 Z" />
+              <path d="M17 97 C 19 89, 34 87, 37 93 C 39 100, 27 106, 20 103 C 16 101, 16 98, 18 95" />
+              <path className="solid" d="M23 97 C 26 93, 32 93, 32 96 C 31 100, 25 102, 23 99 Z" />
+            </svg>
+          </span>
+        </h1>
         <p className="blurb">
-          I study CS, education, and design at UC Berkeley.
-          <br />
-          Welcome to my digital home :)
+          Building tools to help people learn, capturing moments with a camera, and frolicking around Berkeley 🐻
         </p>
         <ul className="socials">
           {SOCIALS.map(({ href, label, icon }) => (
@@ -66,6 +76,7 @@ export default function Home() {
         </ul>
 
         <aside className="now scrap hand">
+          <span className="tape" aria-hidden="true" />
           <div className="sheet">
             <div className="paper">
               <h2>
@@ -108,8 +119,6 @@ export default function Home() {
             {cutout && <img className="cutout" src={cutout} alt="" />}
           </div>
         ))}
-        <Doodle shape="ticks" pen="amber" className="ticks" stretch={false} />
-        <Doodle shape="ticks" pen="amber" className="ticks br" stretch={false} />
         <p className="hand note one">that's me!</p>
         <Doodle shape="arrow" pen="amber" className="arrow" stretch={false} />
         <p className="hand note two">also me!</p>
