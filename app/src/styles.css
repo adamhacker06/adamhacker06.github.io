@@ -14,6 +14,8 @@
   --hand: "Caveat", cursive;
 
   --gutter: 20px;
+  /* Outline of a scrap torn off a pad: clean top and sides, ragged bottom */
+  --torn: polygon(0% 0%, 100% 0%, 99.5% 22%, 99.3% 47%, 98.9% 71%, 100% 91.9%, 96.6% 95.0%, 93.9% 94.1%, 90.2% 97.2%, 87.8% 91.8%, 85.4% 97.4%, 81.5% 89.0%, 77.0% 99.1%, 73.2% 95.3%, 70.6% 88.7%, 67.1% 89.2%, 64.5% 91.2%, 62.2% 93.6%, 59.0% 97.8%, 55.5% 95.5%, 52.1% 95.8%, 48.8% 91.6%, 44.2% 99.5%, 40.0% 96.3%, 37.0% 91.0%, 34.2% 89.3%, 30.1% 92.9%, 25.9% 92.8%, 21.4% 97.8%, 19.2% 90.8%, 14.8% 93.7%, 10.2% 92.9%, 7.9% 95.4%, 3.8% 91.5%, 1.4% 92.2%, 0% 94.9%);
 }
 
 * { box-sizing: border-box; }
@@ -104,31 +106,25 @@ a, button, .snap { cursor: url("./assets/cursors/arrow-active.svg") 9 8, pointer
 .doodle.amber { color: var(--amber); }
 .doodle.blue { color: var(--marker); }
 
-/* Nav links: a squiggle underline on hover, a drawn loop around the current page */
-.nav li a .doodle {
-  position: absolute;
-  color: var(--amber);
-  transition: stroke-dashoffset 0.35s ease-out;
-}
-.nav li a .squiggle {
-  left: 16px;
-  bottom: 2px;
-  width: calc(100% - 32px);
-  height: 8px;
-  stroke-dasharray: 120;
-  stroke-dashoffset: 120;
+/* Nav links: hovering draws an underline; on the current page that line runs on into a loop
+   round the word while its tail is pulled in behind it */
+.nav li a .mark { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--amber); }
+.nav li a .mark path { vector-effect: non-scaling-stroke; }
+.nav li a .under {
+  stroke-dasharray: 90;
+  stroke-dashoffset: 90;
+  /* The delayed opacity keeps the underline hidden while it resets after a tab stops being current */
+  transition: stroke-dashoffset 0.3s ease-out, opacity 0s 0.3s;
 }
 .nav li a .loop {
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  stroke-dasharray: 420;
-  stroke-dashoffset: 420;
+  stroke-dasharray: 290;
+  stroke-dashoffset: 290;
+  transition: stroke-dashoffset 0.4s ease-in;
 }
-.nav li a .loop path { vector-effect: non-scaling-stroke; }
-.nav li a:not([aria-current]):hover .squiggle,
-.nav li a:not([aria-current]):focus-visible .squiggle,
-.nav li a[aria-current] .loop { stroke-dashoffset: 0; }
+.nav li a:hover .under,
+.nav li a:focus-visible .under { stroke-dashoffset: 0; }
+.nav li a[aria-current] .under { stroke-dashoffset: -90; opacity: 0; transition: stroke-dashoffset 0.28s ease-in, opacity 0s 0.28s; }
+.nav li a[aria-current] .loop { stroke-dashoffset: 0; transition: stroke-dashoffset 0.5s ease-out; }
 
 /* Scrapbook cards only become separate transition layers while a filter is animating */
 html[data-filtering] .card { view-transition-name: var(--vt); }
@@ -173,29 +169,46 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 .intro { align-self: start; padding-top: clamp(16px, 9vh, 96px); }
 
 .hero .hello { font-size: clamp(1.6rem, min(3vw, 4.5vh), 2.3rem); }
-.hero h1 { font-size: clamp(2.8rem, min(6.4vw, 11vh), 5.6rem); margin-bottom: 0.25em; }
+.hero h1 { font-size: clamp(2.8rem, min(6.4vw, 11vh), 5.6rem); margin-bottom: 0.12em; }
 
 
-.blurb { max-width: 42ch; margin: clamp(10px, 2.5vh, 24px) 0 clamp(8px, 2vh, 16px); }
+.blurb { max-width: 42ch; margin: clamp(8px, 1.8vh, 16px) 0 clamp(8px, 1.9vh, 16px); }
 
-.socials { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0; padding: 0; list-style: none; font-weight: 600; }
-.socials a { text-decoration-color: var(--amber); text-decoration-thickness: 3px; text-underline-offset: 5px; }
-.socials a:hover { text-decoration-color: var(--marker); }
+/* Bare icons; the padding keeps each one a comfortable tap target */
+.socials { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 0 -8px; padding: 0; list-style: none; }
+.socials a { position: relative; display: grid; place-items: center; padding: 8px 8px 12px; transition: color 0.15s ease-out, translate 0.15s ease-out; }
+.socials a:hover, .socials a:focus-visible { color: var(--marker); translate: 0 -2px; }
+/* The three marks fill their boxes differently, so each is sized to look the same height */
+.socials a { height: 50px; }
+.socials li:nth-child(1) .brand { width: 25px; height: 25px; }
+.socials li:nth-child(2) .brand { width: 29px; height: 29px; }
+.socials .doodle:not(.squiggle) { width: 31px; height: 31px; }
+.socials .brand { fill: currentColor; }
+.socials .doodle:not(.squiggle) { stroke-width: 3.5; }
+.socials .squiggle {
+  position: absolute;
+  left: 6px;
+  bottom: 2px;
+  width: calc(100% - 12px);
+  height: 7px;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  transition: stroke-dashoffset 0.3s ease-out;
+}
+.socials a:hover .squiggle, .socials a:focus-visible .squiggle { stroke-dashoffset: 0; }
 
-/* "Right now": a torn sheet of graph paper, drawn in the same flat style as the photos */
+/* Torn graph-paper scraps, drawn in the same flat style as the photos. "Right now" is the big one. */
+.scrap { position: relative; isolation: isolate; }
 .now {
-  --torn: polygon(0% 0%, 100% 0%, 99.5% 22%, 99.3% 47%, 98.9% 71%, 100% 91.9%, 96.6% 95.0%, 93.9% 94.1%, 90.2% 97.2%, 87.8% 91.8%, 85.4% 97.4%, 81.5% 89.0%, 77.0% 99.1%, 73.2% 95.3%, 70.6% 88.7%, 67.1% 89.2%, 64.5% 91.2%, 62.2% 93.6%, 59.0% 97.8%, 55.5% 95.5%, 52.1% 95.8%, 48.8% 91.6%, 44.2% 99.5%, 40.0% 96.3%, 37.0% 91.0%, 34.2% 89.3%, 30.1% 92.9%, 25.9% 92.8%, 21.4% 97.8%, 19.2% 90.8%, 14.8% 93.7%, 10.2% 92.9%, 7.9% 95.4%, 3.8% 91.5%, 1.4% 92.2%, 0% 94.9%);
-  position: relative;
-  isolation: isolate;
   width: min(100%, 345px);
-  margin: clamp(24px, 7vh, 62px) 0 0 clamp(0px, 2.6vw, 38px);
+  margin: clamp(20px, 5.6vh, 52px) 0 0 clamp(0px, 2.6vw, 38px);
   color: var(--ink);
   transform: rotate(-2deg);
   transition: transform 0.3s ease-out;
 }
 .now:hover { transform: rotate(0deg); }
 /* Flat offset backing */
-.now::before {
+.scrap::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -205,9 +218,10 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   clip-path: var(--torn);
 }
 /* The navy sheet shows as a 2px outline around the paper, following the tear */
-.now .sheet { padding: 2px; background: var(--ink); clip-path: var(--torn); }
-.now .paper {
-  padding: 18px 26px 38px;
+.scrap .sheet { display: block; padding: 2px; background: var(--ink); clip-path: var(--torn); }
+.now .paper { padding: 18px 26px 38px; }
+.scrap .paper {
+  display: block;
   background-color: var(--paper);
   background-image:
     linear-gradient(color-mix(in srgb, var(--sky) 55%, transparent) 1px, transparent 1px),
@@ -314,6 +328,41 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 .section-head h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
 .section-head .hand { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-top: 6px; }
 
+/* A livelier page header: a graph-paper patch behind the title and line-drawn stickers in the corners */
+.lively { position: relative; isolation: isolate; }
+.lively::before {
+  content: "";
+  position: absolute;
+  inset: -20px 6% -120px;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--sky) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--sky) 1.5px, transparent 1.5px);
+  background-size: 34px 34px;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse closest-side, #000 35%, transparent 100%);
+}
+/* Each sticker draws itself in, then bobs gently on its own rhythm */
+.sticker {
+  position: absolute;
+  width: var(--size);
+  height: auto;
+  stroke-width: 2.6;
+  rotate: var(--tilt);
+  animation: bob var(--bob) calc(var(--delay) + 1s) ease-in-out infinite;
+}
+.sticker path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1s var(--delay) ease-out forwards;
+}
+@keyframes bob {
+  50% { translate: 0 -6px; rotate: calc(var(--tilt) + 3deg); }
+}
+@media (max-width: 900px) {
+  .sticker { display: none; }
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -406,32 +455,110 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 .card .kind { display: block; margin-top: 14px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 .card .caption { display: block; font: 600 1.6rem/1.1 var(--hand); color: var(--marker); }
 
-/* Opened work is shown straight and clean: no doodles on the work itself */
+/* Opened work sits on a sheet of graph paper; the work itself stays straight and unmarked */
+html.locked { overflow: hidden; }
 dialog.viewer {
-  width: min(920px, calc(100vw - 32px));
-  max-height: calc(100dvh - 32px);
+  width: min(920px, calc(100vw - 40px));
+  max-height: calc(100dvh - 40px);
   padding: 0;
-  border: 0;
+  border: 2px solid var(--ink);
   color: var(--ink);
-  background: var(--paper);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--sky) 34%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--sky) 34%, transparent) 1px, transparent 1px);
+  background-size: 30px 30px;
+  box-shadow: 12px 12px 0 var(--sky);
+  overscroll-behavior: contain;
 }
-dialog.viewer::backdrop { background: rgb(15 58 158 / 0.82); }
+/* The sheet is set down onto the page: it fades in, rises a little and straightens, and leaves the same way */
+dialog.viewer {
+  opacity: 0;
+  transform: translateY(18px) rotate(-1.2deg);
+  transition: opacity 0.22s ease-out, transform 0.22s ease-out, overlay 0.22s allow-discrete, display 0.22s allow-discrete;
+}
+dialog.viewer[open] { opacity: 1; transform: none; }
+@starting-style {
+  dialog.viewer[open] { opacity: 0; transform: translateY(18px) rotate(-1.2deg); }
+}
+dialog.viewer::backdrop {
+  background: rgb(15 58 158 / 0);
+  transition: background-color 0.22s ease-out, overlay 0.22s allow-discrete, display 0.22s allow-discrete;
+}
+dialog.viewer[open]::backdrop { background: rgb(15 58 158 / 0.86); }
+@starting-style {
+  dialog.viewer[open]::backdrop { background: rgb(15 58 158 / 0); }
+}
 .viewer .print { aspect-ratio: 16 / 9; box-shadow: none; }
 .viewer .print svg { width: 16%; }
-.viewer .info { padding: 20px 24px 26px; }
+.viewer .info { padding: 20px 24px 26px; background: var(--paper); }
 .viewer h2 { font-size: 1.7rem; }
 .viewer p { margin: 8px 0 0; max-width: 60ch; }
-.viewer .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1;
-  font: 700 0.9rem var(--body);
+.print .cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Square outlined buttons with a hand-drawn icon */
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
   color: var(--ink);
   background: var(--paper);
-  border: 0;
-  padding: 8px 12px;
+  border: 2px solid var(--ink);
+  transition: translate 0.15s ease-out, box-shadow 0.15s ease-out;
 }
+.icon-button .doodle { width: 20px; height: 20px; stroke-width: 4; }
+.icon-button .brand { width: 22px; height: 22px; fill: currentColor; }
+.icon-button:hover { translate: -2px -2px; box-shadow: 4px 4px 0 var(--amber); }
+.viewer .close { position: absolute; top: 16px; right: 16px; z-index: 2; }
+
+/* An opened photo album */
+dialog.viewer.album { --stage: min(66dvh, 680px); width: min(1080px, calc(100vw - 40px)); }
+.album-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 16px 66px 6px 26px; }
+.album-head h2 { font-size: 1.9rem; }
+.album-head p { margin: 2px 0 0; font-size: 1.45rem; }
+
+/* One photo at a time, framed like the home page photos, with an optional caption scrap */
+.stage { display: grid; place-items: center; height: var(--stage); padding: 0 26px; --dir: 1; }
+.shot { grid-area: 1 / 1; display: grid; justify-items: center; margin: 0; }
+.shot img {
+  display: block;
+  max-width: calc(min(1080px, 100vw - 40px) - 74px);
+  max-height: calc(var(--stage) - 62px);
+  width: auto;
+  height: auto;
+  border: 2px solid var(--ink);
+  box-shadow: 9px 9px 0 var(--sky);
+}
+.shot figcaption { z-index: 1; margin-top: -10px; font-size: 1.45rem; line-height: 1.15; transform: rotate(-1.5deg); }
+.shot figcaption .paper { padding: 7px 20px 19px; }
+.shot figcaption.scrap::before { translate: 6px 6px; }
+/* Photos cross-fade with a small slide in the direction of travel */
+.shot.entering { animation: shot-in 0.26s ease-out both; }
+.shot.leaving { animation: shot-out 0.26s ease-in both; }
+@keyframes shot-in { from { opacity: 0; transform: translateX(calc(var(--dir) * 22px)); } }
+@keyframes shot-out { to { opacity: 0; transform: translateX(calc(var(--dir) * -22px)); } }
+
+.album-nav { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 4px 0 22px; }
+.album-nav span { min-width: 4.2em; font-size: 1.5rem; text-align: center; color: var(--marker); }
+
+/* All the photos at once; each one lifts onto a backing when pointed at */
+.album-hint { display: flex; align-items: center; gap: 8px; margin: 0; padding: 0 26px 12px; font-size: 1.4rem; color: var(--marker); }
+.album-hint .doodle { width: 34px; height: auto; transform: rotate(40deg); }
+.album-grid { columns: 3 190px; column-gap: 16px; margin: 0; padding: 4px 34px 18px 26px; list-style: none; }
+.album-grid li { break-inside: avoid; padding-bottom: 16px; }
+.album-grid button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 2px solid var(--ink);
+  transition: translate 0.18s ease-out, box-shadow 0.18s ease-out;
+}
+.album-grid button:hover,
+.album-grid button:focus-visible { translate: -4px -4px; box-shadow: 8px 8px 0 var(--sky); }
+.album-grid img { display: block; width: 100%; height: auto; }
 
 :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
 
@@ -446,5 +573,6 @@ dialog.viewer::backdrop { background: rgb(15 58 158 / 0.82); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .underlined .doodle { stroke-dashoffset: 0; }
+  .sticker path { stroke-dashoffset: 0; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }

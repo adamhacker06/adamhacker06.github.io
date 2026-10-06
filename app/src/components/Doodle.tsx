@@ -14,6 +14,12 @@ const PATHS = {
   ticks: { viewBox: '0 0 44 44', d: 'M38 40 L26 30 M22 42 L6 34 M40 24 L32 8' },
   arrow: { viewBox: '0 0 60 44', d: 'M56 5 C 38 2, 16 10, 9 36 M4 24 L9 37 L21 30' },
   star: { viewBox: '0 0 44 44', d: 'M22 4 L27 16 L40 17 L30 26 L33 39 L22 32 L10 39 L14 26 L4 17 L17 16 Z' },
+  grid: { viewBox: '0 0 44 44', d: 'M6 6 H18 V18 H6 Z M26 6 H38 V18 H26 Z M6 26 H18 V38 H6 Z M26 26 H38 V38 H26 Z' },
+  single: { viewBox: '0 0 44 44', d: 'M5 8 H39 V36 H5 Z M5 30 L15 20 L23 28 L29 22 L39 31' },
+  close: { viewBox: '0 0 44 44', d: 'M9 9 L35 35 M35 9 L9 35' },
+  left: { viewBox: '0 0 44 44', d: 'M28 7 L13 22 L28 37' },
+  right: { viewBox: '0 0 44 44', d: 'M16 7 L31 22 L16 37' },
+  envelope: { viewBox: '0 0 44 44', d: 'M4 9 H40 V35 H4 Z M4 10 L22 25 L40 10' },
   arrowRight: { viewBox: '0 0 60 44', d: 'M4 36 C 12 14, 34 8, 53 20 M40 10 L54 21 L42 32' },
 }
 

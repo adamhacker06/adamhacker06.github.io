@@ -8,3 +8,6 @@ dist
 !.vscode/settings.json
 !.vscode/extensions.json
 !.vscode/tasks.json
+
+# Full-size photo originals stay on this machine; compressed copies live in app/src/assets
+photos/originals/
