@@ -272,7 +272,7 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   mask-image: radial-gradient(ellipse closest-side, #000 45%, transparent 100%);
 }
 /* A photo whose frame starts --cut of the way down, so the subject's head pokes out the top.
-   .photo is the full picture clipped to the frame; .cutout is the subject alone, laid over it unclipped. */
+   .photo is the picture cropped to the frame; .cutout is the subject's head from the full picture, laid over the top. */
 .snap {
   position: absolute;
   isolation: isolate;
@@ -292,11 +292,11 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 }
 .snap .photo {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: var(--cut);
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--cut));
   object-fit: cover;
-  clip-path: inset(var(--cut) 0 0 0);
 }
 .snap .cutout { position: absolute; top: 0; left: 0; width: 100%; z-index: 2; }
 /* Flat offset backing for depth */

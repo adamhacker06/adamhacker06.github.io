@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { RoughFilter } from './Doodle.tsx'
 
@@ -22,6 +23,12 @@ function NavMark() {
 export default function Layout() {
   const { pathname } = useLocation()
 
+  // Keep the browser tab's title in step with the page; scripts/postbuild.mjs sets the same titles for crawlers
+  useEffect(() => {
+    const page = LINKS.find(({ to }) => to !== '/' && pathname.startsWith(to))
+    document.title = page ? `${page.label} · Adam Hacker` : 'Adam Hacker'
+  }, [pathname])
+
   return (
     <div className={pathname === '/' ? 'page home' : 'page'}>
       <header className="nav">
@@ -29,7 +36,7 @@ export default function Layout() {
           <ul>
             {LINKS.map(({ to, label }) => (
               <li key={to}>
-                <NavLink to={to} end viewTransition>
+                <NavLink to={to} end={to === '/'} viewTransition>
                   {label}
                   <NavMark />
                 </NavLink>

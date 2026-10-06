@@ -1,18 +1,22 @@
 import type { CSSProperties } from 'react'
 import oscarCutout from '../assets/photos/oscar-cutout.webp'
-import oscar from '../assets/photos/oscar.webp'
 import ropesCourseCutout from '../assets/photos/ropes-course-cutout.webp'
-import ropesCourse from '../assets/photos/ropes-course.webp'
-import mirrorSelfie from '../assets/photography/mirror-selfie.webp'
+import mirrorSelfieLg from '../assets/home/mirror-selfie-lg.webp'
+import mirrorSelfieSm from '../assets/home/mirror-selfie-sm.webp'
+import oscarLg from '../assets/home/oscar-lg.webp'
+import oscarSm from '../assets/home/oscar-sm.webp'
+import ropesCourseLg from '../assets/home/ropes-course-lg.webp'
+import ropesCourseSm from '../assets/home/ropes-course-sm.webp'
 import { Doodle, Underlined } from '../components/Doodle.tsx'
 
 // `cut` is how far down the picture the frame starts; everything above it is just the cutout.
 // The cutouts are the top slice of each photo with the background removed; a photo without one just sits in its frame.
+// Each photo file is already cropped to its frame and comes in two widths; the browser picks one.
 // Listed back to front: later photos sit on top of earlier ones and their backings.
 const SNAPS = [
-  { src: mirrorSelfie, cutout: undefined, alt: "Adam reflected in a car's wing mirror, holding a camera, with forest rushing past.", x: '0%', y: '3%', w: '57%', ratio: '2000 / 1333', cut: '0%', tilt: '-3deg', back: 'var(--sky)' },
-  { src: oscar, cutout: oscarCutout, alt: 'Adam leaning toward the camera, grinning and holding a gold Oscar statuette.', x: '5%', y: '35%', w: '40%', ratio: '768 / 1024', cut: '30%', tilt: '2deg', back: 'var(--sky)' },
-  { src: ropesCourse, cutout: ropesCourseCutout, alt: 'Adam in a green helmet taking a selfie on a treetop ropes course, holding up a peace sign.', x: '54%', y: '6%', w: '46%', ratio: '768 / 1024', cut: '41%', tilt: '3deg', back: 'var(--sky)' },
+  { src: mirrorSelfieLg, small: mirrorSelfieSm, widths: [520, 960], cutout: undefined, alt: "Adam reflected in a car's wing mirror, holding a camera, with forest rushing past.", x: '0%', y: '3%', w: '57%', ratio: '2000 / 1333', cut: '0%', tilt: '-3deg', back: 'var(--sky)' },
+  { src: oscarLg, small: oscarSm, widths: [400, 768], cutout: oscarCutout, alt: 'Adam leaning toward the camera, grinning and holding a gold Oscar statuette.', x: '5%', y: '35%', w: '40%', ratio: '768 / 1024', cut: '30%', tilt: '2deg', back: 'var(--sky)' },
+  { src: ropesCourseLg, small: ropesCourseSm, widths: [420, 768], cutout: ropesCourseCutout, alt: 'Adam in a green helmet taking a selfie on a treetop ropes course, holding up a peace sign.', x: '54%', y: '6%', w: '46%', ratio: '768 / 1024', cut: '41%', tilt: '3deg', back: 'var(--sky)' },
 ]
 
 // Lines on the graph-paper sheet; the first one gets circled. Keep them short.
@@ -88,13 +92,19 @@ export default function Home() {
       </div>
 
       <figure className="collage">
-        {SNAPS.map(({ src, cutout, alt, ...place }) => (
+        {SNAPS.map(({ src, small, widths, cutout, alt, ...place }) => (
           <div
             key={src}
             className="snap"
             style={{ '--x': place.x, '--y': place.y, '--w': place.w, '--ratio': place.ratio, '--cut': place.cut, '--tilt': place.tilt, '--back': place.back } as CSSProperties}
           >
-            <img className="photo" src={src} alt={alt} />
+            <img
+              className="photo"
+              src={src}
+              srcSet={`${small} ${widths[0]}w, ${src} ${widths[1]}w`}
+              sizes={`(max-width: 760px) calc(min(86vw, 420px) * ${parseFloat(place.w) / 100}), calc(min(40vw, 72vh) * ${parseFloat(place.w) / 100})`}
+              alt={alt}
+            />
             {cutout && <img className="cutout" src={cutout} alt="" />}
           </div>
         ))}

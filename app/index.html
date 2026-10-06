@@ -4,8 +4,35 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- scripts/postbuild.mjs rewrites the title, description and URLs below for each page -->
     <title>Adam Hacker</title>
-    <meta name="description" content="Adam Hacker's personal site: code, LEGO, photography and much more." />
+    <meta name="description" content="Personal site of Adam Hacker, a UC Berkeley student in CS, education and design. Photography, projects and what I'm up to right now." />
+    <link rel="canonical" href="https://adamhacker.dev/" />
+
+    <!-- Link previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Adam Hacker" />
+    <meta property="og:title" content="Adam Hacker" />
+    <meta property="og:description" content="Personal site of Adam Hacker, a UC Berkeley student in CS, education and design. Photography, projects and what I'm up to right now." />
+    <meta property="og:url" content="https://adamhacker.dev/" />
+    <meta property="og:image" content="https://adamhacker.dev/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Adam Hacker's home page: his name beside a scrapbook pile of photos and a handwritten note." />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Adam Hacker",
+        "url": "https://adamhacker.dev/",
+        "image": "https://adamhacker.dev/og.jpg",
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of California, Berkeley" },
+        "sameAs": ["https://github.com/adamhacker06", "https://www.linkedin.com/in/adamhacker06"]
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
