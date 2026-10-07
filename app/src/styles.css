@@ -258,18 +258,19 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   background-position: 9px 9px;
   clip-path: var(--torn);
 }
-/* A sliver of tape holding the note to the page, with pinked ends */
-.now .tape {
+/* A sliver of tape holding a scrap to the page, with pinked ends. --tape-x and --tape-tilt place it. */
+.scrap .tape {
   position: absolute;
   top: -8px;
-  left: 50%;
+  left: var(--tape-x, 50%);
   z-index: 1;
   width: 62px;
   height: 17px;
   background: rgb(245 166 35 / 0.6);
   clip-path: polygon(0 0, 100% 0, 96% 25%, 100% 50%, 96% 75%, 100% 100%, 0 100%, 4% 75%, 0 50%, 4% 25%);
-  transform: translateX(-50%) rotate(-4deg);
+  transform: translateX(-50%) rotate(var(--tape-tilt, -4deg));
 }
+.xp-highlights .tape { width: 50px; height: 15px; }
 .now h2 { margin: 0 0 14px; font: inherit; font-size: 2.1rem; color: var(--marker); }
 .now ul { margin: 0; padding: 0; list-style: none; font-size: 1.6rem; line-height: 1.25; }
 /* Each line sits at its own angle and indent, like it was jotted down at a different time */
@@ -374,7 +375,8 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   padding: 0 8px 0 0;
   list-style: none;
 }
-.xp-highlights li { transform: rotate(var(--tilt)); }
+.xp-highlights li { transform: rotate(var(--tilt)); transition: transform 0.3s ease-out; }
+.xp-highlights li:hover { transform: rotate(0deg) translateY(-3px); }
 .xp-highlights .paper { padding: 16px 18px 30px; }
 .xp-highlights strong { display: block; font-size: clamp(1.5rem, 3.2vw, 2rem); }
 .xp-highlights span span span { display: block; margin-top: 4px; font-size: 0.92rem; line-height: 1.4; }
@@ -425,13 +427,43 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
 .tags li { padding: 1px 9px; font-size: 0.8rem; font-weight: 600; border: 1.5px solid var(--sky); }
 .xp-entry .aside { margin-top: 12px; font-size: 1.35rem; }
-.xp-entry .aside a { text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+/* Like the home page icons: the link lifts, darkens and gets a drawn underline, and its arrow steps forward */
+.xp-entry .aside a {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 7px;
+  text-decoration: none;
+  transition: color 0.15s ease-out, translate 0.15s ease-out;
+}
+.xp-entry .aside a:hover, .xp-entry .aside a:focus-visible { color: var(--ink); translate: 0 -2px; }
+.xp-entry .aside .squiggle {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 7px;
+  stroke-width: 2.5;
+  /* Longer than the widest link, so the line is drawn in one unbroken stroke */
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  transition: stroke-dashoffset 0.5s ease-out;
+}
+.xp-entry .aside .squiggle path { vector-effect: non-scaling-stroke; }
+.xp-entry .aside a:hover .squiggle, .xp-entry .aside a:focus-visible .squiggle { stroke-dashoffset: 0; }
+.xp-entry .aside .go { display: inline-block; transition: translate 0.2s ease-out; }
+.xp-entry .aside a:hover .go { translate: 4px 0; }
+.xp-entry .aside a:hover .go.out { translate: 3px -3px; }
 
 .xp-school { margin-top: 64px; }
 .xp-school .bar { height: 10px; margin-bottom: 26px; }
 .xp-school h2 { font-size: 1.5rem; }
-.xp-school .hand { font-size: 1.45rem; margin: 2px 0 8px; }
-.xp-school p:not(.hand) { margin: 4px 0 0; max-width: 62ch; }
+.xp-school .hand { font-size: 1.45rem; margin: 2px 0 0; }
+/* Labelled rows: a small caps label on the left, the facts on the right */
+.xp-school dl { margin: 14px 0 0; }
+.xp-school dl > div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); column-gap: 18px; padding: 9px 0; border-top: 1.5px solid color-mix(in srgb, var(--sky) 55%, transparent); }
+.xp-school dt { grid-row: 1 / span 3; padding-top: 4px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--marker); }
+.xp-school dd { grid-column: 2; margin: 0; }
+.xp-school .tags { margin-top: 2px; }
 
 @media (max-width: 640px) {
   .xp-highlights { grid-template-columns: 1fr; padding-right: 10px; }

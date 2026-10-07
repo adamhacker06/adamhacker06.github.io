@@ -157,9 +157,10 @@ export const ENTRIES: Entry[] = [
 export const EDUCATION = {
   school: 'University of California, Berkeley',
   when: 'Class of 2028',
-  lines: [
-    'BS in Electrical Engineering and Computer Science, minor in STEM Education, Jacobs Design Certificate.',
-    'Regents’ and Chancellor’s Scholar and Edison Scholar.',
-    'Clubs: Codebase, Delta Consulting and PASAE.',
+  rows: [
+    { label: 'Major', items: ['BS in Electrical Engineering and Computer Science'] },
+    { label: 'Also', items: ['Minor in STEM Education', 'Jacobs Design Certificate'] },
+    { label: 'Honors', items: ['Regents’ and Chancellor’s Scholar', 'Edison Scholar'] },
   ],
+  clubs: ['Codebase', 'Delta Consulting', 'Pilipino Association of Scientists, Architects, and Engineers (PASAE)'],
 }
