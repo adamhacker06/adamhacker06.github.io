@@ -61,7 +61,7 @@ export const ENTRIES: Entry[] = [
     detail: 'Glendale, CA',
     when: 'May – Aug 2026',
     summary:
-      'I spent the summer on the Digital Product Optimization team, leading early work on AI agent tooling for the group that runs experimentation and testing. A lot of it was groundwork: archiving more than a thousand past experiments so they can be searched in plain language, and working out how the team’s records should link together in Airtable.',
+      'I spent the summer on the Digital Product Optimization team, leading early work on AI agent tooling for the group that runs experimentation and testing. A lot of it was groundwork: archiving past experiments so they can be searched in plain language, and working out how the team’s records should link together in Airtable.',
     tags: ['Product', 'AI tooling', 'Experimentation'],
   },
   {
