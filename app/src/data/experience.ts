@@ -165,5 +165,5 @@ export const EDUCATION = {
     { label: 'Also', items: ['Minor in STEM Education', 'Jacobs Design Certificate'] },
     { label: 'Honors', items: ['Regents’ and Chancellor’s Scholar', 'Edison Scholar'] },
   ],
-  clubs: ['Codebase', 'Delta Consulting', 'Pilipino Association of Scientists, Architects, and Engineers (PASAE)'],
+  clubs: ['Codebase', 'Delta Consulting', 'Pilipinx Association of Scientists, Architects, and Engineers (PASAE)'],
 }
