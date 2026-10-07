@@ -674,6 +674,9 @@ dialog.viewer.album { --stage: min(66dvh, 680px); width: min(1080px, calc(100vw 
 .album-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 16px 66px 6px 26px; }
 .album-head h2 { font-size: 1.9rem; }
 .album-head p { margin: 2px 0 0; font-size: 1.45rem; }
+.album-head .album-links { margin-top: 4px; font-size: 1.3rem; }
+.album-links a { color: var(--ink); text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.album-links a:hover { color: var(--marker); }
 
 /* One photo at a time, framed like the home page photos, with an optional caption scrap */
 .stage { display: grid; place-items: center; height: var(--stage); padding: 0 26px; --dir: 1; }
@@ -696,6 +699,8 @@ dialog.viewer.album { --stage: min(66dvh, 680px); width: min(1080px, calc(100vw 
 @keyframes shot-in { from { opacity: 0; transform: translateX(calc(var(--dir) * 22px)); } }
 @keyframes shot-out { to { opacity: 0; transform: translateX(calc(var(--dir) * -22px)); } }
 
+/* Keeps the sheet's bottom margin when a single image has no arrows under it */
+.stage:last-child { margin-bottom: 22px; }
 .album-nav { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 4px 0 22px; }
 .album-nav span { min-width: 4.2em; font-size: 1.5rem; text-align: center; color: var(--marker); }
 

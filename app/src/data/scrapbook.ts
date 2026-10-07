@@ -1,6 +1,6 @@
 export const KINDS = {
   photos: 'Photos',
-  builds: 'Builds',
+  design: 'Design',
   code: 'Code',
   odds: 'Odds & ends',
 } as const
@@ -24,6 +24,8 @@ export type Item = {
   text: string
   // Albums carry real photos; the first one is the cover on the wall
   photos?: Photo[]
+  // Optional links shown under the description when the item is open
+  links?: { label: string; href: string }[]
   // Placeholder look for items that have no image yet
   tone: string
   ratio: string
@@ -44,6 +46,59 @@ function photo(name: string, width: number, height: number, alt: string, caption
     height,
   }
 }
+
+// Screenshots and build photos for the code projects, in assets/projects
+const projectFull = import.meta.glob<string>('../assets/projects/*.webp', { eager: true, query: '?url', import: 'default' })
+const projectThumbs = import.meta.glob<string>('../assets/projects/thumbs/*.webp', { eager: true, query: '?url', import: 'default' })
+
+function shot(name: string, width: number, height: number, alt: string, caption?: string): Photo {
+  return {
+    src: projectFull[`../assets/projects/${name}.webp`],
+    thumb: projectThumbs[`../assets/projects/thumbs/${name}.webp`],
+    alt,
+    caption,
+    width,
+    height,
+  }
+}
+
+const BLUEGRASS = [
+  shot('bluegrass-archive', 988, 984, 'A faded colour snapshot of a young man in a graduation cap and gown, with a woman beside him smiling up at him.'),
+]
+
+const COVERS = [
+  shot('cover-waterfall', 1290, 1290, 'A square cover: three snapshots of Adam down the left with white doodled outlines, beside a desert waterfall scribbled over with blue marker and stick figures.'),
+  shot('cover-summer-2024', 1290, 1292, 'A square cover titled Be Happy It Happened, Summer 2024: a crowd of cut-out friends and family layered in front of a blue-tinted waterfall.', 'summer 2024'),
+  shot('cover-collage', 1284, 1286, 'A square cover made of overlapping framed photos of Adam with friends, including one posing with a llama and one piggyback ride.'),
+]
+
+const repo = (name: string) => [{ label: 'code on GitHub', href: `https://github.com/adamhacker06/${name}` }]
+
+const RAINFALL = [
+  shot('rainfall-of-babel-hero', 1600, 905, 'A dark screen titled The Rainfall of Babel, with grey words falling and a few glowing gold above a dense block of text.', 'real words glow gold'),
+  shot('rainfall-of-babel-too-many', 1600, 907, 'An earlier version of the piece with the screen crowded by falling words.', 'too many words!'),
+  shot('rainfall-of-babel-draft', 1600, 1135, 'A first draft where words sit on small coloured chips in a pile.', 'the first draft'),
+]
+
+const SOUNDILIZER = [
+  shot('sound-for-someone-cover', 1600, 905, 'The Color Soundilizer app: a colour picker beside a canvas with a red heart drawn around the letters DES INV.', 'every colour is a sound'),
+]
+
+const DIGITAL_YOU = [
+  shot('a-digital-you-final', 1600, 872, 'A chunky black pixel silhouette of a person holding up a peace sign against a near-white background.', "that's me, in pixels"),
+  shot('a-digital-you-second', 1600, 872, 'A finer-grained black pixel silhouette flecked with small dots of colour.', 'finer cells'),
+  shot('a-digital-you-first', 1600, 872, 'An early version with very large black cells that only loosely suggest a figure.', 'the first try'),
+]
+
+const EROSION = [
+  shot('digital-erosion-wiring1', 1600, 1219, 'A potentiometer on a breadboard wired to an Arduino with red, yellow and black jumper wires.', 'the knob'),
+  shot('digital-erosion-wiring2', 1600, 1212, 'A second view of the potentiometer and Arduino wiring.'),
+]
+
+const TREASURE = [
+  shot('glow-treasure-hunt-final', 1600, 872, 'Three treasure chests in pink, tan and green on a dark screen, with a win streak of 10 in the corner.', 'which chest?'),
+  shot('glow-treasure-hunt-wiring', 1352, 1484, 'An Arduino wired to a breadboard holding a single red LED and a resistor.', 'the LED knows'),
+]
 
 const TAIWAN = [
   photo('jiufen-teahouse', 1080, 1920, 'A hillside teahouse at night, strung with rows of glowing red lanterns.', 'jiufen'),
@@ -78,17 +133,28 @@ const CALIFORNIA = [
   photo('waffle-cones', 2000, 1333, 'Two hands holding up loaded waffle cones in front of a rushing river.'),
 ]
 
-// The albums, the bluegrass archive and the MLA are real; the other cards are stand-ins.
+// Everything on the wall is real; add a card by adding an entry here.
 export const ITEMS: Item[] = [
   { id: 'taiwan', kind: 'photos', title: 'Taiwan', photos: TAIWAN, tone: 'var(--ink)', ratio: '3 / 4', tilt: -2.5, text: 'Lantern-lit Jiufen, a brick street at dusk and Taipei 101.' },
-  { id: 'bluegrass', kind: 'odds', title: 'the bluegrass archive', tone: 'var(--ink)', ratio: '4 / 3', tilt: 1.5, text: 'Decades of family photos and cassette recordings, scanned and compiled into video in 2020.' },
+  {
+    id: 'bluegrass',
+    kind: 'odds',
+    title: 'the bluegrass archive',
+    photos: BLUEGRASS,
+    links: [{ label: 'open the archive', href: 'https://drive.google.com/drive/folders/1I_wPrTWT286Z3UTsDGvDtQv24NT3t_vp' }],
+    tone: 'var(--ink)',
+    ratio: '1 / 1',
+    tilt: 1.5,
+    text: 'Decades of family photos and cassette recordings, scanned and compiled into video in 2020.',
+  },
   { id: 'philippines', kind: 'photos', title: 'the Philippines', photos: PHILIPPINES, tone: 'var(--ink)', ratio: '3 / 4', tilt: 2, text: 'Volcano views, palms under cloud and wildflowers.' },
-  { id: 'build-1', kind: 'builds', title: 'a LEGO build', tone: 'var(--amber)', ratio: '1 / 1', tilt: 3, text: 'Stand-in for a build.' },
+  { id: 'playlist-covers', kind: 'design', title: 'playlist covers', photos: COVERS, tone: 'var(--ink)', ratio: '1 / 1', tilt: 3, text: 'Cover art I designed for my Spotify playlists.' },
   { id: 'cabo', kind: 'photos', title: 'Cabo', photos: CABO, tone: 'var(--ink)', ratio: '3 / 4', tilt: -1.5, text: 'A sailboat at golden hour, the rocky shore and tacos.' },
-  { id: 'code-1', kind: 'code', title: 'a code project', tone: 'var(--bar)', ratio: '4 / 3', tilt: -1.5, text: 'Stand-in for a project, with a link out to the repo.' },
-  { id: 'mla', kind: 'odds', title: 'the MLA', tone: 'var(--cobalt-deep)', ratio: '4 / 3', tilt: -3, text: 'The multimodal literacy autobiography this whole site borrows its look from.' },
+  { id: 'rainfall-of-babel', kind: 'code', title: 'Rainfall of Babel', photos: RAINFALL, links: repo('rainfall-of-babel'), tone: 'var(--ink)', ratio: '4 / 3', tilt: -1.5, text: 'Words generated from Borges’ Library of Babel rain down the screen, and only the real ones glow.' },
+  { id: 'color-soundilizer', kind: 'code', title: 'Color Soundilizer', photos: SOUNDILIZER, links: repo('sound-for-someone'), tone: 'var(--ink)', ratio: '4 / 3', tilt: 2, text: 'A drawing tool where every colour plays its own sound, so a sketch becomes a song you can replay.' },
   { id: 'disneyland', kind: 'photos', title: 'Disneyland', photos: DISNEYLAND, tone: 'var(--ink)', ratio: '3 / 4', tilt: 2.5, text: 'A log flume, a droid and a spaceport.' },
-  { id: 'code-2', kind: 'code', title: 'another project', tone: 'var(--ink)', ratio: '1 / 1', tilt: 2.5, text: 'Stand-in for a project.' },
+  { id: 'a-digital-you', kind: 'code', title: 'A Digital You', photos: DIGITAL_YOU, links: repo('a-digital-you'), tone: 'var(--ink)', ratio: '4 / 3', tilt: 2.5, text: 'Your webcam silhouette, redrawn live as a grid of chunky pixels.' },
+  { id: 'glow-treasure-hunt', kind: 'code', title: 'Glow Treasure Hunt', photos: TREASURE, links: repo('glow-treasure-hunt'), tone: 'var(--ink)', ratio: '4 / 3', tilt: -2.5, text: 'A guessing game where the only clue is a real LED that glows brighter as you get warmer.' },
+  { id: 'digital-erosion', kind: 'code', title: 'Digital Erosion', photos: EROSION, links: repo('digital-erosion'), tone: 'var(--ink)', ratio: '4 / 3', tilt: 1.5, text: 'A pulse that gets more chaotic the busier my calendar is, and a physical knob for calming it down.' },
   { id: 'california', kind: 'photos', title: 'California', photos: CALIFORNIA, tone: 'var(--ink)', ratio: '3 / 4', tilt: -2, text: 'The Golden Gate, a waterfall and waffle cones by a river.' },
-  { id: 'odd-1', kind: 'odds', title: 'a small thing', tone: 'var(--amber)', ratio: '4 / 3', tilt: 1, text: "Anything that doesn't need its own category." },
 ]

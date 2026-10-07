@@ -12,7 +12,7 @@ const FILTERS: [Filter, string][] = [['all', 'All'], ...(Object.entries(KINDS) a
 
 const ICONS: Record<Kind, string> = {
   photos: 'M6 14 H20 L25 6 H40 L45 14 H58 V42 H6 Z M32 36 A9 9 0 1 0 31.9 36',
-  builds: 'M6 18 H58 V42 H6 Z M14 18 V9 H26 V18 M38 18 V9 H50 V18',
+  design: 'M10 40 L14 28 L44 6 L52 14 L24 38 Z M40 9 L49 18',
   code: 'M22 10 L7 24 L22 38 M42 10 L57 24 L42 38 M36 6 L28 42',
   odds: 'M32 5 L38 19 L54 20 L42 30 L46 45 L32 37 L18 45 L22 30 L10 20 L26 19 Z',
 }
@@ -73,6 +73,8 @@ type View = { index: number; prev: number | null; dir: 1 | -1 }
 // An opened album: one photo at a time by default, or all of them in a grid
 function Album({ item, photos }: { item: Item; photos: Photo[] }) {
   const [grid, setGrid] = useState(false)
+  // With a single image there is nothing to step through or lay out in a grid
+  const single = photos.length === 1
   const [view, setView] = useState<View>({ index: 0, prev: null, dir: 1 })
 
   // Wait for the next photo to be ready, then cross-fade to it
@@ -112,15 +114,26 @@ function Album({ item, photos }: { item: Item; photos: Photo[] }) {
             <Underlined pen="amber">{item.title}</Underlined>
           </h2>
           <p className="hand">{item.text}</p>
+          {item.links && (
+            <p className="album-links hand">
+              {item.links.map(({ label, href }) => (
+                <a key={href} href={href} target="_blank" rel="noopener noreferrer">
+                  {label} ↗
+                </a>
+              ))}
+            </p>
+          )}
         </div>
-        <button
-          className="icon-button"
-          type="button"
-          aria-label={grid ? 'Show one photo at a time' : 'Show all photos'}
-          onClick={() => setGrid(!grid)}
-        >
-          <Doodle shape={grid ? 'single' : 'grid'} stretch={false} />
-        </button>
+        {!single && (
+          <button
+            className="icon-button"
+            type="button"
+            aria-label={grid ? 'Show one photo at a time' : 'Show all photos'}
+            onClick={() => setGrid(!grid)}
+          >
+            <Doodle shape={grid ? 'single' : 'grid'} stretch={false} />
+          </button>
+        )}
       </div>
 
       {grid ? (
@@ -151,17 +164,19 @@ function Album({ item, photos }: { item: Item; photos: Photo[] }) {
             {view.prev !== null && <Shot key={`out-${view.prev}`} photo={photos[view.prev]} className="leaving" hidden />}
             <Shot key={view.index} photo={photos[view.index]} className={view.prev !== null ? 'entering' : ''} />
           </div>
-          <div className="album-nav">
-            <button className="icon-button" type="button" aria-label="Previous photo" onClick={() => step(-1)}>
-              <Doodle shape="left" stretch={false} />
-            </button>
-            <span className="hand">
-              {view.index + 1} of {photos.length}
-            </span>
-            <button className="icon-button" type="button" aria-label="Next photo" onClick={() => step(1)}>
-              <Doodle shape="right" stretch={false} />
-            </button>
-          </div>
+          {!single && (
+            <div className="album-nav">
+              <button className="icon-button" type="button" aria-label="Previous photo" onClick={() => step(-1)}>
+                <Doodle shape="left" stretch={false} />
+              </button>
+              <span className="hand">
+                {view.index + 1} of {photos.length}
+              </span>
+              <button className="icon-button" type="button" aria-label="Next photo" onClick={() => step(1)}>
+                <Doodle shape="right" stretch={false} />
+              </button>
+            </div>
+          )}
         </>
       )}
     </>
