@@ -33,6 +33,16 @@
       }
     </script>
 
+    <!-- Clear the offline cache left behind by the old blog theme, in case its copy of the site is still being served -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((reg) => reg.unregister()))
+      }
+      if ('caches' in window) {
+        caches.keys().then((keys) => keys.forEach((key) => caches.delete(key)))
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
