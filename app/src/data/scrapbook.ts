@@ -70,6 +70,15 @@ const COVERS = [
   shot('cover-waterfall', 1290, 1290, 'A square cover: three snapshots of Adam down the left with white doodled outlines, beside a desert waterfall scribbled over with blue marker and stick figures.'),
   shot('cover-summer-2024', 1290, 1292, 'A square cover titled Be Happy It Happened, Summer 2024: a crowd of cut-out friends and family layered in front of a blue-tinted waterfall.', 'summer 2024'),
   shot('cover-collage', 1284, 1286, 'A square cover made of overlapping framed photos of Adam with friends, including one posing with a llama and one piggyback ride.'),
+  shot('cover-friends', 1135, 1135, 'A square cover collaged from photos of Adam with friends: graduation gowns, a car selfie, a snowman, and a circle of names around a prom photo.'),
+]
+
+const OWLS = [
+  shot('duolingo-making', 768, 1024, 'A green felt owl mask with big white eyes and an orange beak, lying beside scissors and a sheet of traced outlines.', 'cut out of felt'),
+  shot('duolingo-batch', 768, 1024, 'Ten finished green felt owl masks laid out on a wooden floor among glue guns, scissors and felt offcuts.', 'the production line'),
+  shot('duolingo-wearing', 768, 1024, 'Adam standing in a doorway wearing one of the green felt owl masks over his eyes.', 'quality control'),
+  shot('duolingo-streak', 1600, 1200, 'Adam and a friend wearing the felt owl masks on their heads; the friend holds up a phone showing a 1,000 day streak.', '1,000 days!'),
+  shot('duolingo-group', 1600, 1200, 'A group of friends at night, most of them wearing or holding green felt owl masks.', 'the whole flock'),
 ]
 
 const repo = (name: string) => [{ label: 'code on GitHub', href: `https://github.com/adamhacker06/${name}` }]
@@ -135,6 +144,7 @@ const CALIFORNIA = [
 
 // Everything on the wall is real; add a card by adding an entry here.
 export const ITEMS: Item[] = [
+  { id: 'duolingo-owls', kind: 'odds', title: 'Duolingo owl masks', photos: OWLS, tone: 'var(--ink)', ratio: '3 / 4', tilt: -2, text: 'Felt owl masks I made to celebrate my friend’s 1,000-day Duolingo streak.' },
   { id: 'taiwan', kind: 'photos', title: 'Taiwan', photos: TAIWAN, tone: 'var(--ink)', ratio: '3 / 4', tilt: -2.5, text: 'Lantern-lit Jiufen, a brick street at dusk and Taipei 101.' },
   {
     id: 'bluegrass',

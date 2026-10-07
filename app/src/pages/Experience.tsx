@@ -16,7 +16,7 @@ export default function Experience() {
   return (
     <main className="xp">
       <div className="section-head">
-        <h1 className="display">Where I've worked</h1>
+        <h1 className="display">What I've been up to</h1>
         <p className="hand">
           <Underlined pen="amber">newest first</Underlined>
         </p>

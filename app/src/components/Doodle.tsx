@@ -20,7 +20,7 @@ const PATHS = {
   left: { viewBox: '0 0 44 44', d: 'M28 7 L13 22 L28 37' },
   right: { viewBox: '0 0 44 44', d: 'M16 7 L31 22 L16 37' },
   envelope: { viewBox: '0 0 44 44', d: 'M4 9 H40 V35 H4 Z M4 10 L22 25 L40 10' },
-  arrowRight: { viewBox: '0 0 60 44', d: 'M4 36 C 12 14, 34 8, 53 20 M40 10 L54 21 L42 32' },
+  arrowRight: { viewBox: '0 0 60 44', d: 'M4 36 C 12 14, 34 8, 53 20 M47.5 6.5 L53 20 L38.5 20.5' },
 }
 
 type DoodleProps = {

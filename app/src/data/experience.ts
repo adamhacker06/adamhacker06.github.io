@@ -1,10 +1,13 @@
 // Everything here comes from the résumé, rewritten in plain first-person language.
 // The summaries are first drafts and are meant to be rewritten.
 
-export type Kind = 'work' | 'research' | 'campus'
+export type Kind = 'work' | 'club' | 'fellowship' | 'research' | 'campus'
 
 export const KIND_LABELS: Record<Kind, string> = {
   work: 'Work',
+  // Client projects done through a student consulting club, not employment
+  club: 'Club project',
+  fellowship: 'Fellowship',
   research: 'Research',
   campus: 'Campus',
 }
@@ -63,7 +66,7 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'sony',
-    kind: 'work',
+    kind: 'club',
     role: 'Software Engineering Consultant',
     org: 'Sony Interactive Entertainment',
     detail: 'through Codebase',
@@ -74,7 +77,7 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'jane-street',
-    kind: 'work',
+    kind: 'fellowship',
     role: 'IN FOCUS Fellow',
     org: 'Jane Street',
     detail: 'New York, NY',
@@ -85,7 +88,7 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'google',
-    kind: 'work',
+    kind: 'club',
     role: 'Site Reliability Engineering Consultant',
     org: 'Google',
     detail: 'through Codebase',
@@ -120,7 +123,7 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'adobe',
-    kind: 'work',
+    kind: 'club',
     role: 'Software Engineering & Applied AI Consultant',
     org: 'Adobe',
     detail: 'through Delta Consulting',

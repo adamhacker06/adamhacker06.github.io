@@ -9,8 +9,8 @@ const HOME_DESCRIPTION =
   "Personal site of Adam Hacker, a UC Berkeley student in EECS, education and design. Photography, projects and what I'm up to right now."
 
 const PAGES = [
-  { path: 'about', title: 'About · Adam Hacker', description: 'About Adam Hacker, a UC Berkeley student in EECS, education and design.' },
-  { path: 'experience', title: 'Experience · Adam Hacker', description: 'Where Adam Hacker has worked: product at Disney, engineering projects with Sony, Google and Adobe, and education research at UC Berkeley.' },
+  { path: 'about', title: 'About · Adam Hacker', description: 'About Adam Hacker: a UC Berkeley student in EECS, education and design, from Visalia, California, who wants to build tools that help people learn.' },
+  { path: 'experience', title: 'Experience · Adam Hacker', description: 'What Adam Hacker has been up to: a product internship at Disney, club consulting projects for Sony, Google and Adobe, and education research at UC Berkeley.' },
   {
     path: 'scrapbook',
     title: 'Scrapbook · Adam Hacker',
