@@ -151,7 +151,7 @@ export const ITEMS: Item[] = [
     kind: 'odds',
     title: 'the bluegrass archive',
     photos: BLUEGRASS,
-    links: [{ label: 'open the archive', href: 'https://drive.google.com/drive/folders/1I_wPrTWT286Z3UTsDGvDtQv24NT3t_vp' }],
+    links: [{ label: 'listen to the recordings', href: 'https://drive.google.com/drive/folders/1cyLoQhLFnhs14Q2gP5uVhBFNilQJj_T-' }],
     tone: 'var(--ink)',
     ratio: '1 / 1',
     tilt: 1.5,
