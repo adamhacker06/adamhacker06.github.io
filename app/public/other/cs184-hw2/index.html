@@ -1,0 +1,234 @@
+<html>
+	<head>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+		<style>
+			h1 {
+				text-align: center;
+			}
+
+			.container {
+				margin: 0 auto;
+				padding: 60px 20%;
+			}
+
+			figure {
+				text-align: center;
+			}
+
+			img {
+				display: inline-block;
+			}
+
+			body {
+				font-family: 'Inter', sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+		<h1>CS184/284A Fall 2026 Homework 2 Write-Up</h1>
+		<div style="text-align: center;">Name: Adam Hacker</div>
+
+		<br>
+
+		Link to webpage: <a href="https://adamhacker.dev/other/cs184-hw2">https://adamhacker.dev/other/cs184-hw2</a>
+
+		<br>
+		
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/hw2-hacker">https://github.com/cal-cs184-student/hw2-hacker</a>
+
+		<figure>
+			<img src="assets/hero.png" alt="Cow!" style="width:50%"/>
+			<figcaption>A cow!</figcaption>
+		</figure>
+
+		<!--
+		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
+		-->
+
+		<h2>Overview</h2>
+		In this homework, I implemented a way to render Bezier curves and surfaces using the de Casteljau algorithm. I also learned about triangle meshes and the half-edge data structure. I created a few functions that manipulate the half-edge data structure, including edge flip, edge split, and loop subdivision. I also created a way to calculate area-weighted vertex normals for smooth shading (Phong shading).
+
+		I really enjoyed this assignment! I found the half-edge data structure, particularly, to be a very interesting way to store information about a mesh. I also enjoyed learning about the algorithms behind Bezier curves, surfaces, and Phong shading, and how much of it is just simple interpolations repeated across multiple dimensions or components. It was cool to see very "trivial" linear algebra concepts like normals and cross products be used in a more complex way to represent camera placement and shading.
+
+		<h2>Section I: Bezier Curves and Surfaces</h2>
+
+		<h3>Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
+
+		The main idea of the de Casteljau algorithm is to recursively calculate the middle points between control points using a parameter \( t \). The formula for getting these intermediate points is determined by:
+
+		\[ P_i^{(k)} = (1 - t)\, P_i^{(k-1)} + t\, P_{i+1}^{(k-1)} \]
+
+		You are essentially doing linear interpolation between the control points, and then repeating this step many times until you reach one point. This is the evaluated point on the Bezier curve. In the implemented code, I created a function that does one step of this interpolation. The engine then repeats this until a single point is evaluated.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/curve0.png" width="400px"/>
+				  <figcaption>Level 0 w/ 6 control points.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/curve1.png" width="400px"/>
+				  <figcaption>Level 1.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/curve2.png" width="400px"/>
+				  <figcaption>Level 2.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/curve3.png" width="400px"/>
+				  <figcaption>Level 3.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/curve4.png" width="400px"/>
+				  <figcaption>Level 4.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/curve5.png" width="400px"/>
+				  <figcaption>Level 5 w/ the final evaluated point.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<figure>
+			<img src="assets/curvemodified.png" alt="Modified Bezier curve" style="width:50%"/>
+			<figcaption>A different curve showcasing the moved control points and parameter \( t \).</figcaption>
+		</figure>
+
+		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
+
+		For Bezier surfaces, the de Casteljau algorithm is applied in two dimensions. To start, there is a grid of control points. The process is to first evaluate the surface in one direction (for example, the u-directionn). This is completed by acting like each row of control points is a separate Bezier curve and applying the de Casteljau algorithm to each row. After finishing this and getting the intermediate points, the algorithm is then applied again in the other direction (for example, the v-direction) using these intermediate points. This then gives the final evaluated point on the Bezier surface.
+
+		<figure>
+			<img src="assets/teapotbez.png" alt="Bezier teapot" style="width:50%"/>
+			<figcaption>bez/teapot.bez.</figcaption>
+		</figure>
+
+		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
+
+		<h3>Part 3: Area-weighted vertex normals</h3>
+
+		To get the normal at a vertex, I iterate through the half-edge structure and go to every triangle that touches it. Then, for each triangle, I take the cross product of two of its edges. The direction of this normal faces outward and is twice the length of the triangle's area. I then add this normal to an overall total. After iterating through all the triangles, I normalize the total to get the final vertex normal. This is done for every vertex in the mesh. Phong shading interpolates these normals along the surface of the triangle, which is what makes it smooth. The default flat shading uses the triangle's normal for the entire triangle, which is why it looks flat.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/teapotdae-flat.png" width="400px"/>
+				  <figcaption>Teapot with default flat shading.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/teapotdae-phong.png" width="400px"/>
+				  <figcaption>Teapot with Phong shading.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<h3>Part 4: Edge flip</h3>
+
+		This was fun (but tricky!) to implement. To flip an edge, I first collect everything about it (edges, faces, vertices, and halfedges) by taking an iterative pass. Then, I update the halfedge structure using setNeighbors to reflect the new connections. This means updating the next and twin pointers of the halfedges, as well as reassigning the face, edge, and vertex halfedge pointers. While implementing this, I quickly got my wires crossed so I made multiple inline comments that meant to illustrate the different components of the triangles. This made debugging a lot faster.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/teapot-before.png" width="400px"/>
+				  <figcaption>The teapot before any edge flips.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/edgeflip.png" width="400px"/>
+				  <figcaption>The teapot after some edge flips.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<h3>Part 5: Edge split</h3>
+
+		This was even trickier to implement! My apporach, however, was very similar. I collected everything I needed to know about the triangles using the same code as before. Then, I started by creating a new vertex at the midpoint of the edge to split. I then realized that for this problem, there were so many new components that trying to label them inline would be too much for me to track. So instead, I organized the new components by face and worked my way face-by-face, instead giving the new components numbers instead of labeled positions. I found it easier to track this way. I think worked my way face-by-face, reassigning halfedge components with setNeighbor() and reassigning face, edge, and vertex halfedges along the way. Debugging was a mix of trying this new number labeing system out and recompiling to see if the code would work.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/cow.png" width="400px"/>
+				  <figcaption>The cow mesh before any edge splits.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/cow-split.png" width="400px"/>
+				  <figcaption>The cow mesh after some edge splits.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/cowside.png" width="400px"/>
+				  <figcaption>The cow mesh (side view) before splits and flips.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/cowside-split-flipped.png" width="400px"/>
+				  <figcaption>The cow mesh (side view) after a combination of edge splits and edge flips.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
+
+		To start loop subdivsion, I made a new position for every orginal vertex using a weighted average of the vertex and its neighbors (n is the vertex's degree):
+
+		\[ P' = (1 - n u)\, P + u \sum_{i=1}^{n} P_i, \qquad u = \begin{cases} 3/16 & n = 3 \\ 3/(8n) & \text{otherwise} \end{cases} \]
+
+		Then, I got a new position for each edge's new midpoint vertex by using the two endpoints of the edge and the two opposite vertices. The formula for this is:
+
+		\[ M = \frac{3}{8}(A + B) + \frac{1}{8}(C + D) \]
+				
+		Then, I split every edge and flipped edges that connected an old vertex to a new vertex, using splitEdge(), flipEdge() and keeping track of component history with the isNew flag.
+
+		Then, I updated the positions of all vertices to their new positions by copying newPosition to position.
+
+		As part of this process, I performed subdivison on a cube multiple times and observed some asymmetry. The sharp corners and edges slowly started to smooth and curve, creating a blob-like object after multiple subdivisions. This makes sense because subdivision averages out the positions of vertices and each face of this cube was only defined by one diagonal (two half triangles). This means that the diagonals of each face were not symmetric, which caused the asymmetry in the final result.
+
+		To try to fix this, I did some preprocessing and split each face's diagonal first. This added a vertex in the middle of each face connected to the four corners, so that every corner now has the same number of neighbors. This made the final result more symmetric and smooth after multiple subdivisions.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/upsample0.png" width="400px"/>
+				  <figcaption>Original mesh (0 iterations of loop subdivision).</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/upsample1.png" width="400px"/>
+				  <figcaption>1 iteration.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/upsample2.png" width="400px"/>
+				  <figcaption>2 iterations.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/upsample3.png" width="400px"/>
+				  <figcaption>3 iterations.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td colspan="2" style="text-align: center;">
+				  <img src="assets/upsample4.png" width="400px"/>
+				  <figcaption>4 iterations.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		</div>
+	</body>
+</html>
