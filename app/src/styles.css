@@ -486,17 +486,17 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 .xp-entry .summary { margin: 0.625rem 0 0; max-width: 62ch; }
 .tags { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: 0.75rem 0 0; padding: 0; list-style: none; }
 .tags li { padding: 1px 0.5625rem; font-size: 0.8rem; font-weight: 600; border: 1.5px solid var(--sky); }
-.xp-entry .aside { margin-top: 0.75rem; font-size: 1.35rem; }
+:is(.xp-entry, .project) .aside { margin-top: 0.75rem; font-size: 1.35rem; }
 /* Like the home page icons: the link lifts, darkens and gets a drawn underline, and its arrow steps forward */
-.xp-entry .aside a {
+:is(.xp-entry, .project) .aside a {
   position: relative;
   display: inline-block;
   padding-bottom: 0.4375rem;
   text-decoration: none;
   transition: color 0.15s ease-out, translate 0.15s ease-out;
 }
-.xp-entry .aside a:hover, .xp-entry .aside a:focus-visible { color: var(--ink); translate: 0 -2px; }
-.xp-entry .aside .squiggle {
+:is(.xp-entry, .project) .aside a:hover, :is(.xp-entry, .project) .aside a:focus-visible { color: var(--ink); translate: 0 -2px; }
+:is(.xp-entry, .project) .aside .squiggle {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -508,11 +508,11 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   stroke-dashoffset: 26.25rem;
   transition: stroke-dashoffset 0.5s ease-out;
 }
-.xp-entry .aside .squiggle path { vector-effect: non-scaling-stroke; }
-.xp-entry .aside a:hover .squiggle, .xp-entry .aside a:focus-visible .squiggle { stroke-dashoffset: 0; }
-.xp-entry .aside .go { display: inline-block; transition: translate 0.2s ease-out; }
-.xp-entry .aside a:hover .go { translate: 0.25rem 0; }
-.xp-entry .aside a:hover .go.out { translate: 3px -3px; }
+:is(.xp-entry, .project) .aside .squiggle path { vector-effect: non-scaling-stroke; }
+:is(.xp-entry, .project) .aside a:hover .squiggle, :is(.xp-entry, .project) .aside a:focus-visible .squiggle { stroke-dashoffset: 0; }
+:is(.xp-entry, .project) .aside .go { display: inline-block; transition: translate 0.2s ease-out; }
+:is(.xp-entry, .project) .aside a:hover .go { translate: 0.25rem 0; }
+:is(.xp-entry, .project) .aside a:hover .go.out { translate: 3px -3px; }
 
 .xp-school { margin-top: 4rem; }
 .xp-school .bar { height: 0.625rem; margin-bottom: 1.625rem; }
@@ -534,6 +534,80 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   .xp-entry .what::before { display: none; }
   .xp-entry .when { text-align: left; margin-bottom: 0.4rem; }
   .xp-photo { width: min(70%, 15rem); max-height: 13.75rem; margin: 0.5rem 0 1rem; }
+}
+
+/* ---------- Projects ---------- */
+.projects { width: min(100%, 66rem); margin: 0 auto; padding: 0 clamp(0.5rem, 3vw, 1.5rem) 5rem; }
+.projects-intro { max-width: 52ch; margin: 1.75rem auto 0; text-align: center; }
+
+/* One row per project: the picture on one side, the write-up on the other, swapping sides each row */
+.project-list { margin-top: 4rem; display: grid; gap: 5.5rem; }
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(2rem, 5vw, 4rem);
+  scroll-margin-top: 2rem;
+}
+.project:nth-child(even) .project-pics { order: 2; }
+.project-pics { padding: 0.5rem 1rem 0 0.25rem; }
+
+/* The main picture, framed and backed like the home page photos; it straightens when pointed at */
+.project-main {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 2px solid var(--ink);
+  background: none;
+  box-shadow: 0.5625rem 0.5625rem 0 var(--sky);
+  rotate: -1.5deg;
+  transition: rotate 0.3s ease-out;
+}
+.project:nth-child(even) .project-main { rotate: 1.5deg; }
+.project-main:hover, .project-main:focus-visible { rotate: 0deg; }
+.project-main img, .project-more img { display: block; width: 100%; height: auto; }
+
+/* The other pictures sit underneath as small prints */
+.project-more { display: flex; gap: 1rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
+.project-more li { width: 30%; }
+.project-more li:nth-child(2) { rotate: 2deg; }
+.project-more li:first-child { rotate: -1.5deg; }
+.project-more button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 2px solid var(--ink);
+  background: none;
+  transition: translate 0.18s ease-out, box-shadow 0.18s ease-out;
+}
+.project-more button:hover, .project-more button:focus-visible { translate: -0.25rem -0.25rem; box-shadow: 0.375rem 0.375rem 0 var(--sky); }
+.project-more img { aspect-ratio: 4 / 3; object-fit: cover; }
+
+.project .kind { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--marker); }
+.project h2 { margin-top: 2px; font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.project p { margin: 0.75rem 0 0; max-width: 60ch; }
+.project h3 { margin: 1.25rem 0 0; font-size: 1.5rem; }
+.project h3 + p { margin-top: 0.25rem; }
+
+/* Design work at the end, in the quieter style of the Experience page's education section */
+.covers { margin-top: 6rem; }
+.covers .bar { height: 0.625rem; margin-bottom: 1.625rem; }
+.covers h2 { font-size: 1.5rem; }
+.covers p { margin: 0.375rem 0 0; }
+.covers ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1rem, 3vw, 2rem); margin: 2rem 0 0; padding: 0 0.5rem 0 0; list-style: none; }
+.covers li { rotate: var(--tilt); transition: rotate 0.3s ease-out; }
+.covers li:hover { rotate: 0deg; }
+.covers button { display: block; width: 100%; padding: 0; border: 2px solid var(--ink); background: none; box-shadow: 0.4375rem 0.4375rem 0 var(--sky); }
+.covers img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+
+@media (max-width: 760px) {
+  .project-list { margin-top: 3rem; gap: 4rem; }
+  .project { grid-template-columns: 1fr; gap: 1.5rem; }
+  .project:nth-child(even) .project-pics { order: 0; }
+  .project-pics { padding: 0 0.75rem 0 0; }
+  .project-more { margin-top: 1.25rem; }
+  .covers { margin-top: 4.5rem; }
+  .covers ul { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 }
 
 /* ---------- Scrapbook ---------- */
@@ -807,11 +881,12 @@ dialog.viewer.album { --stage: min(66dvh, 42.5rem); width: min(67.5rem, calc(100
   .collage { width: min(86%, 26.25rem); }
 }
 
-/* Phones: keep the four tabs on one row, and stop the note's last line wrapping */
+/* Phones: keep the five tabs on one row (the nav borrows the page's side gutters to fit), and stop
+   the note's last line wrapping */
 @media (max-width: 480px) {
-  .nav { padding-inline: 0; }
+  .nav { padding-inline: 0; margin-inline: calc(-1 * var(--gutter)); }
   .nav ul { flex-wrap: nowrap; gap: 0; }
-  .nav li a { padding-inline: 0.6rem; font-size: 0.95rem; }
+  .nav li a { padding-inline: clamp(0.3rem, 1.6vw, 0.6rem); font-size: 0.9rem; }
   .now li:nth-child(3) { margin-left: 1rem; }
   .now li:nth-child(2) { margin-right: 0; }
   .now .paper { padding-inline: 1.25rem; }
@@ -838,7 +913,7 @@ dialog.viewer.album { --stage: min(66dvh, 42.5rem); width: min(67.5rem, calc(100
 /* The smallest phones: pull the tabs in so the circled one keeps clear of the screen edge */
 @media (max-width: 360px) {
   .page { --gutter: 0.75rem; padding: 0.75rem; }
-  .nav li a { padding-inline: 0.45rem; font-size: 0.875rem; }
+  .nav li a { padding-inline: 0.3rem; font-size: 0.8rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

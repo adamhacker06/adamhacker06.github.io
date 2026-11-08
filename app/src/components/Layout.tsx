@@ -6,6 +6,7 @@ const LINKS = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/experience', label: 'Experience' },
+  { to: '/projects', label: 'Projects' },
   { to: '/scrapbook', label: 'Scrapbook' },
 ]
 
@@ -21,12 +22,15 @@ function NavMark() {
 }
 
 export default function Layout() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
 
-  // A new page starts at the top, not wherever the last one was scrolled to
+  // A new page starts at the top, not wherever the last one was scrolled to, unless the link
+  // points at a section on it (such as /projects#digital-erosion)
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
+    const target = hash && document.getElementById(decodeURIComponent(hash.slice(1)))
+    if (target) target.scrollIntoView()
+    else window.scrollTo(0, 0)
+  }, [pathname, hash])
 
   // Keep the browser tab's title in step with the page; scripts/postbuild.mjs sets the same titles for crawlers
   useEffect(() => {
