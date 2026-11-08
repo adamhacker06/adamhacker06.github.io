@@ -12,6 +12,11 @@ const PAGES = [
   { path: 'about', title: 'About · Adam Hacker', description: 'About Adam Hacker: a UC Berkeley student in EECS, education and design, from Visalia, California, who wants to build tools that help people learn.' },
   { path: 'experience', title: 'Experience · Adam Hacker', description: 'What Adam Hacker has been up to: a product internship at Disney, club consulting projects for Sony, Google and Adobe, and education research at UC Berkeley.' },
   {
+    path: 'now',
+    title: 'Now · Adam Hacker',
+    description: "What Adam Hacker is learning, building, reading, photographing and listening to this month, on a drawn desk beside his shelf of mugs and LEGO.",
+  },
+  {
     path: 'projects',
     title: 'Projects · Adam Hacker',
     description: 'Projects by Adam Hacker: interactive pieces built with p5.js, the Web Audio API, webcams and Arduinos, each with what he learned and the code on GitHub.',

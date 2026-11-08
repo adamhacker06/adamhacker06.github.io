@@ -291,6 +291,10 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 .xp-highlights li:hover, .about-small li:hover { transform: rotate(calc(var(--tilt) * -0.6)); }
 .xp-highlights .tape { width: 3.125rem; height: 0.9375rem; }
 .now h2 { margin: 0 0 0.875rem; font: inherit; font-size: 2.1rem; color: var(--marker); }
+.now h2 a { text-decoration: none; transition: color 0.15s ease-out; }
+.now h2 a:hover, .now h2 a:focus-visible { color: var(--ink); }
+.now h2 .go { display: inline-block; font-size: 1.7rem; transition: translate 0.2s ease-out; }
+.now h2 a:hover .go { translate: 0.25rem 0; }
 .now ul { margin: 0; padding: 0; list-style: none; font-size: 1.6rem; line-height: 1.25; }
 /* Each line sits at its own angle and indent, like it was jotted down at a different time */
 .now li:nth-child(1) { transform: rotate(-1.5deg); margin-left: 0.75rem; }
@@ -608,6 +612,104 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   .project-more { margin-top: 1.25rem; }
   .covers { margin-top: 4.5rem; }
   .covers ul { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+}
+
+/* ---------- Now ---------- */
+.now-page { width: min(100%, 76rem); margin: 0 auto; padding: 0 clamp(0.5rem, 3vw, 1.5rem) 5rem; }
+.now-page .updated { margin: 0.5rem 0 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--marker); }
+
+/* The drawn nook beside this month's note; the note drops below it on narrower screens */
+.nook-wrap { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); align-items: center; gap: clamp(2rem, 4vw, 4rem); margin-top: 3rem; }
+
+.nook { position: relative; aspect-ratio: 1000 / 700; isolation: isolate; }
+/* Graph-paper wall behind the furniture, fading out at the edges */
+.nook::before {
+  content: "";
+  position: absolute;
+  inset: -8% -6%;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--sky) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--sky) 1.5px, transparent 1.5px);
+  background-size: 2.125rem 2.125rem;
+  opacity: 0.45;
+  mask-image: radial-gradient(ellipse closest-side, #000 50%, transparent 100%);
+}
+.nook .furniture { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--ink); }
+/* Lines are drawn at screen size so they stay the same weight however big the scene is */
+.nook .doodle path { vector-effect: non-scaling-stroke; stroke-width: 0.15625rem; }
+.nook-things { margin: 0; padding: 0; list-style: none; }
+
+/* Everything stands on its bottom edge at the spot its style gives it */
+.thing { position: absolute; display: flex; justify-content: center; }
+.thing .hold { position: relative; display: block; width: 100%; color: var(--marker); outline-offset: 0.375rem; transition: translate 0.2s ease-out, rotate 0.2s ease-out; }
+.thing svg, .thing img { display: block; width: 100%; height: auto; }
+.thing .hold:hover, .thing .hold:focus-visible, .thing.active .hold { translate: 0 -0.375rem; rotate: -2deg; }
+
+/* A shelf thing's name appears above it, handwritten, when pointed at */
+.shelf-thing .tag {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.375rem);
+  translate: -50% 0.25rem;
+  font-size: 1.3rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out, translate 0.15s ease-out;
+}
+.shelf-thing .hold:hover .tag, .shelf-thing .hold:focus-visible .tag { opacity: 1; translate: -50% 0; }
+
+/* This month's photo hangs on the wall, framed like the photos on the home page */
+.thing.wall-photo { left: 60%; top: 9%; width: 25%; rotate: 2deg; }
+.thing.wall-photo .hold { aspect-ratio: 4 / 3; display: grid; place-items: center; border: 2px solid var(--ink); background: var(--paper); box-shadow: 0.5rem 0.5rem 0 var(--sky); }
+.thing.wall-photo svg { width: 62%; }
+
+/* This month, on a taped scrap of graph paper; the line for whatever is pointed at gets underlined */
+.now-note { transform: rotate(1.5deg); --tape-x: 40%; --tape-tilt: -5deg; }
+.now-note:hover { transform: rotate(-1deg); }
+.now-note .paper { padding: 1.5rem 1.625rem 2.75rem; }
+.now-note ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 1rem; }
+.now-note li { position: relative; padding-bottom: 0.375rem; }
+.now-note .label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.now-note .hand { display: block; font-size: 1.6rem; }
+.now-note a { color: inherit; text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 0.25rem; }
+.now-note .squiggle {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(100%, 14rem);
+  height: 0.4375rem;
+  stroke-width: 0.15625rem;
+  stroke-dasharray: 26.25rem;
+  stroke-dashoffset: 26.25rem;
+  transition: stroke-dashoffset 0.45s ease-out;
+}
+.now-note .squiggle path { vector-effect: non-scaling-stroke; }
+.now-note li.active .squiggle { stroke-dashoffset: 0; }
+
+/* Older months, kept quietly underneath */
+.now-archive { margin-top: 5rem; max-width: 46rem; }
+.now-archive .bar { height: 0.625rem; margin-bottom: 1.625rem; }
+.now-archive h2 { font-size: 1.5rem; }
+.now-archive .month { margin-top: 1.5rem; }
+.now-archive .month > .hand { font-size: 1.45rem; }
+.now-archive dl { margin: 0.5rem 0 0; }
+.now-archive dl > div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); column-gap: 1.125rem; padding: 0.4375rem 0; border-top: 1.5px solid color-mix(in srgb, var(--sky) 55%, transparent); }
+.now-archive dt { padding-top: 0.25rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--marker); }
+.now-archive dd { margin: 0; }
+
+@media (max-width: 1000px) {
+  .nook-wrap { grid-template-columns: 1fr; justify-items: center; }
+  .nook { width: min(100%, 44rem); }
+  .now-note { width: min(100%, 26rem); }
+}
+@media (max-width: 480px) {
+  .nook-wrap { margin-top: 2rem; }
+  .now-note .hand { font-size: 1.45rem; }
+  .shelf-thing .tag { font-size: 1.1rem; }
+  .now-archive dl > div { grid-template-columns: 1fr; }
+  .now-archive dt { padding-top: 0; }
 }
 
 /* ---------- Scrapbook ---------- */

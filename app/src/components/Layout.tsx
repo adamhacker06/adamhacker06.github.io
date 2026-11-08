@@ -34,7 +34,8 @@ export default function Layout() {
 
   // Keep the browser tab's title in step with the page; scripts/postbuild.mjs sets the same titles for crawlers
   useEffect(() => {
-    const page = LINKS.find(({ to }) => to !== '/' && pathname.startsWith(to))
+    // The Now page is reached from the home page's note rather than the nav
+    const page = [...LINKS, { to: '/now', label: 'Now' }].find(({ to }) => to !== '/' && pathname.startsWith(to))
     document.title = page ? `${page.label} · Adam Hacker` : 'Adam Hacker'
   }, [pathname])
 
