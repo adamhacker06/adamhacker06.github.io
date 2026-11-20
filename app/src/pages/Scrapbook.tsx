@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import type { CSSProperties } from 'react'
 import { flushSync } from 'react-dom'
-import { Navigate, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { Doodle, Underlined } from '../components/Doodle.tsx'
 import Viewer from '../components/Viewer.tsx'
-import { PROJECT_IDS } from '../data/projects.ts'
 import { ITEMS, KINDS } from '../data/scrapbook.ts'
 import type { Item, Kind } from '../data/scrapbook.ts'
 
@@ -14,6 +13,8 @@ const FILTERS: [Filter, string][] = [['all', 'All'], ...(Object.entries(KINDS) a
 
 const ICONS: Record<Kind, string> = {
   photos: 'M6 14 H20 L25 6 H40 L45 14 H58 V42 H6 Z M32 36 A9 9 0 1 0 31.9 36',
+  design: 'M10 40 L14 28 L44 6 L52 14 L24 38 Z M40 9 L49 18',
+  code: 'M22 10 L7 24 L22 38 M42 10 L57 24 L42 38 M36 6 L28 42',
   odds: 'M32 5 L38 19 L54 20 L42 30 L46 45 L32 37 L18 45 L22 30 L10 20 L26 19 Z',
 }
 
@@ -47,14 +48,7 @@ function Print({ item }: { item: Item }) {
   )
 }
 
-// The code projects and playlist covers moved to /projects; old links to them still land there
 export default function Scrapbook() {
-  const { hash } = useLocation()
-  if (PROJECT_IDS.has(hash.slice(1))) return <Navigate to={`/projects${hash}`} replace />
-  return <Wall />
-}
-
-function Wall() {
   const [filter, setFilter] = useState<Filter>('all')
   // A link such as /scrapbook#taiwan arrives with that item already open
   const { hash } = useLocation()

@@ -17,14 +17,9 @@ const PAGES = [
     description: "What Adam Hacker is learning, building, reading, photographing and listening to this month, on a drawn desk beside his shelf of mugs and LEGO.",
   },
   {
-    path: 'projects',
-    title: 'Projects · Adam Hacker',
-    description: 'Projects by Adam Hacker: interactive pieces built with p5.js, the Web Audio API, webcams and Arduinos, each with what he learned and the code on GitHub.',
-  },
-  {
     path: 'scrapbook',
     title: 'Scrapbook · Adam Hacker',
-    description: "Adam Hacker's scrapbook: photo albums from Taiwan, the Philippines, Cabo, Disneyland and California, a family bluegrass archive and some felt owl masks.",
+    description: "Adam Hacker's scrapbook: photo albums from Taiwan, the Philippines, Cabo, Disneyland and California, plus things he has made: creative coding projects, playlist covers, a family bluegrass archive and some felt owl masks.",
   },
 ]
 

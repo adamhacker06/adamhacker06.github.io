@@ -1,3 +1,5 @@
+// Hidden for now: this page has no route. To bring it back, add it to the router in main.tsx, the
+// LINKS list in components/Layout.tsx, PAGES in scripts/postbuild.mjs and public/sitemap.xml.
 import { useState } from 'react'
 import type { CSSProperties } from 'react'
 import { Doodle, Underlined } from '../components/Doodle.tsx'

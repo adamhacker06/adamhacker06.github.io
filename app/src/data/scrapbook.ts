@@ -1,10 +1,13 @@
 import { photo, shot } from './images.ts'
+import { COVERS, PROJECTS } from './projects.ts'
 import type { Photo } from './images.ts'
 
 export type { Photo }
 
 export const KINDS = {
   photos: 'Photos',
+  design: 'Design',
+  code: 'Code',
   odds: 'Odds & ends',
 } as const
 
@@ -70,10 +73,18 @@ const CALIFORNIA = [
   photo('waffle-cones', 2000, 1333, 'Two hands holding up loaded waffle cones in front of a rushing river.'),
 ]
 
+// The code projects keep their write-ups in projects.ts (for the Projects page, hidden for now);
+// on the wall they show their one-line tagline
+function project(id: string, tilt: number): Item {
+  const p = PROJECTS.find((x) => x.id === id)
+  if (!p) throw new Error(`scrapbook: no project called ${id}`)
+  return { id, kind: 'code', title: p.title, photos: p.photos, links: p.links, tone: 'var(--ink)', ratio: '4 / 3', tilt, text: p.tagline }
+}
+
 // Everything on the wall is real; add a card by adding an entry here.
 export const ITEMS: Item[] = [
   { id: 'duolingo-owls', kind: 'odds', title: 'Duolingo owl masks', photos: OWLS, tone: 'var(--ink)', ratio: '3 / 4', tilt: -2, text: 'Felt owl masks I made to celebrate my friend’s 1,000-day Duolingo streak.' },
-  { id: 'taiwan', kind: 'photos', title: 'Taiwan', photos: TAIWAN, tone: 'var(--ink)', ratio: '3 / 4', tilt: 2.5, text: 'Lantern-lit Jiufen, a brick street at dusk and Taipei 101.' },
+  { id: 'taiwan', kind: 'photos', title: 'Taiwan', photos: TAIWAN, tone: 'var(--ink)', ratio: '3 / 4', tilt: -2.5, text: 'Lantern-lit Jiufen, a brick street at dusk and Taipei 101.' },
   {
     id: 'bluegrass',
     kind: 'odds',
@@ -82,11 +93,17 @@ export const ITEMS: Item[] = [
     links: [{ label: 'listen to the recordings', href: 'https://drive.google.com/drive/folders/1cyLoQhLFnhs14Q2gP5uVhBFNilQJj_T-' }],
     tone: 'var(--ink)',
     ratio: '1 / 1',
-    tilt: -1.5,
+    tilt: 1.5,
     text: 'Decades of family photos and cassette recordings, scanned and compiled into video in 2020.',
   },
   { id: 'philippines', kind: 'photos', title: 'the Philippines', photos: PHILIPPINES, tone: 'var(--ink)', ratio: '3 / 4', tilt: 2, text: 'Volcano views, palms under cloud and wildflowers.' },
+  { id: COVERS.id, kind: 'design', title: COVERS.title, photos: COVERS.photos, tone: 'var(--ink)', ratio: '1 / 1', tilt: 3, text: COVERS.text },
   { id: 'cabo', kind: 'photos', title: 'Cabo', photos: CABO, tone: 'var(--ink)', ratio: '3 / 4', tilt: -1.5, text: 'A sailboat at golden hour, the rocky shore and tacos.' },
+  project('rainfall-of-babel', -1.5),
+  project('color-soundilizer', 2),
   { id: 'disneyland', kind: 'photos', title: 'Disneyland', photos: DISNEYLAND, tone: 'var(--ink)', ratio: '3 / 4', tilt: 2.5, text: 'A log flume, a droid and a spaceport.' },
+  project('a-digital-you', 2.5),
+  project('glow-treasure-hunt', -2.5),
+  project('digital-erosion', 1.5),
   { id: 'california', kind: 'photos', title: 'California', photos: CALIFORNIA, tone: 'var(--ink)', ratio: '3 / 4', tilt: -2, text: 'The Golden Gate, a waterfall and waffle cones by a river.' },
 ]

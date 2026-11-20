@@ -434,8 +434,10 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 /* Three torn scraps with the headline facts */
 .xp-highlights {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.375rem clamp(1rem, 3vw, 1.875rem);
+  /* Two scraps, centred as a pair */
+  grid-template-columns: repeat(2, minmax(0, 18rem));
+  justify-content: center;
+  gap: 1.375rem clamp(1.5rem, 5vw, 3.5rem);
   margin: 2.375rem 0 0;
   padding: 0 0.5rem 0 0;
   list-style: none;
@@ -518,6 +520,22 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 :is(.xp-entry, .project) .aside a:hover .go { translate: 0.25rem 0; }
 :is(.xp-entry, .project) .aside a:hover .go.out { translate: 3px -3px; }
 
+/* One line on who I am, for anyone who lands here first */
+.xp-lede { max-width: 38ch; margin: 0.875rem auto 0.5rem; font-size: 1.15rem; line-height: 1.5; }
+
+/* Shorter commitments, set smaller under the timeline: a date, the role and one paragraph */
+.xp-also { margin-top: 3.5rem; }
+.xp-also h2 { font-size: 1.5rem; }
+.xp-also ul { margin: 0.75rem 0 0; padding: 0; list-style: none; }
+.xp-also li { display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); padding: 0.875rem 0; border-top: 1.5px solid color-mix(in srgb, var(--sky) 55%, transparent); }
+.xp-also .when { padding: 0.125rem 1.625rem 0 0; font-size: 1.3rem; text-align: right; white-space: nowrap; }
+.xp-also h3 { margin: 0; font-size: 1.0625rem; line-height: 1.35; }
+.xp-also .org { font-weight: 400; }
+.xp-also li > div > p:not(.aside) { margin: 0.25rem 0 0; max-width: 62ch; font-size: 0.95rem; }
+.xp-also .aside { margin-top: 0.375rem; font-size: 1.25rem; }
+.xp-also .aside a { text-decoration: none; }
+.xp-also .aside a:hover { color: var(--ink); }
+
 .xp-school { margin-top: 4rem; }
 .xp-school .bar { height: 0.625rem; margin-bottom: 1.625rem; }
 .xp-school h2 { font-size: 1.5rem; }
@@ -538,6 +556,8 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
   .xp-entry .what::before { display: none; }
   .xp-entry .when { text-align: left; margin-bottom: 0.4rem; }
   .xp-photo { width: min(70%, 15rem); max-height: 13.75rem; margin: 0.5rem 0 1rem; }
+  .xp-also li { grid-template-columns: 1fr; }
+  .xp-also .when { padding: 0 0 0.25rem; text-align: left; }
 }
 
 /* ---------- Projects ---------- */

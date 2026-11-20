@@ -1,15 +1,14 @@
 // Everything here comes from the résumé, rewritten in plain first-person language.
 // The summaries are first drafts and are meant to be rewritten.
 
-export type Kind = 'work' | 'club' | 'fellowship' | 'research' | 'campus'
+// The domain each entry belongs to, shown in small caps above its title
+export type Kind = 'product' | 'software' | 'education' | 'community'
 
 export const KIND_LABELS: Record<Kind, string> = {
-  work: 'Work',
-  // Client projects done through a student consulting club, not employment
-  club: 'Club project',
-  fellowship: 'Fellowship',
-  research: 'Research',
-  campus: 'Campus',
+  product: 'Product',
+  software: 'Software',
+  education: 'Education',
+  community: 'Community',
 }
 
 export type Entry = {
@@ -21,6 +20,9 @@ export type Entry = {
   detail?: string
   when: string
   ongoing?: boolean
+  // Shorter commitments (a week-long fellowship, part-time campus roles) go in the compact
+  // "Also" list under the timeline, so the main roles stand out
+  minor?: boolean
   summary: string
   tags: string[]
   // Optional handwritten link under the entry: `to` for a page on this site, `href` for another site
@@ -47,7 +49,6 @@ export function photoFor(id: string) {
 
 export const HIGHLIGHTS = [
   { big: 'Disney', small: 'Product management intern, summer 2026' },
-  { big: '1,500+', small: 'Berkeley students on the grading dashboard I help build' },
   { big: 'SIGCSE ’26', small: 'Co-author on an accepted research poster' },
 ]
 
@@ -55,7 +56,7 @@ export const HIGHLIGHTS = [
 export const ENTRIES: Entry[] = [
   {
     id: 'disney',
-    kind: 'work',
+    kind: 'product',
     role: 'Product Management Intern',
     org: 'Disney Experiences Technology',
     detail: 'Glendale, CA',
@@ -66,7 +67,7 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'sony',
-    kind: 'club',
+    kind: 'software',
     role: 'Software Engineering Consultant',
     org: 'Sony Interactive Entertainment',
     detail: 'through Codebase',
@@ -77,18 +78,19 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'jane-street',
-    kind: 'fellowship',
+    kind: 'software',
     role: 'IN FOCUS Fellow',
     org: 'Jane Street',
     detail: 'New York, NY',
     when: 'Jan 2026',
+    minor: true,
     summary:
       'Five days in New York as one of 24 fellows, learning from senior engineers how fast systems are designed and how market making works. I also wrote my first OCaml, which meant unlearning some object-oriented habits.',
     tags: ['Systems', 'OCaml'],
   },
   {
     id: 'google',
-    kind: 'club',
+    kind: 'software',
     role: 'Site Reliability Engineering Consultant',
     org: 'Google',
     detail: 'through Codebase',
@@ -99,31 +101,32 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'as-for-all',
-    kind: 'research',
+    kind: 'education',
     role: 'A’s for All Instructor Dashboard',
     org: 'UC Berkeley',
     detail: 'with Prof. Dan Garcia',
     when: 'Aug 2025 – now',
     ongoing: true,
     summary:
-      'I help build a dashboard for mastery learning, where students are graded concept by concept. It supports more than 1,500 Berkeley students, and I’m a co-author on a poster accepted to ACM SIGCSE 2026 about its open-source design for large CS courses. Of everything here, this is the closest to what I want to keep doing.',
+      'I help build a dashboard for mastery learning, where students are graded concept by concept. It supports more than 1,500 Berkeley students, and I’m a co-author on a poster accepted to ACM SIGCSE 2026 about its open-source design for large CS courses.',
     tags: ['Education', 'Research', 'Open source'],
     link: { label: 'read the SIGCSE poster abstract', href: 'https://dl.acm.org/doi/10.1145/3770761.3777343' },
   },
   {
     id: 'k12',
-    kind: 'campus',
+    kind: 'education',
     role: 'K-12 Engineering Ambassador',
     org: 'Berkeley College of Engineering',
     when: 'Aug 2025 – now',
     ongoing: true,
+    minor: true,
     summary:
       'One of 12 undergraduates who represent the College of Engineering to younger students, through college-prep events and visits to primary schools.',
     tags: ['Outreach', 'STEM education'],
   },
   {
     id: 'adobe',
-    kind: 'club',
+    kind: 'software',
     role: 'Software Engineering & Applied AI Consultant',
     org: 'Adobe',
     detail: 'through Delta Consulting',
@@ -134,7 +137,7 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'edison',
-    kind: 'work',
+    kind: 'software',
     role: 'Computer Science Intern',
     org: 'Southern California Edison',
     detail: 'Pomona, CA',
@@ -145,11 +148,12 @@ export const ENTRIES: Entry[] = [
   },
   {
     id: 'globe',
-    kind: 'campus',
+    kind: 'community',
     role: 'Peer Advisor & GLOBE Ambassador Lead',
     org: 'GLOBE Center, UC Berkeley',
     when: 'Jan 2025 – now',
     ongoing: true,
+    minor: true,
     summary:
       'I advise visiting international engineering students on finding their way around campus. It began as a semester programme for 19 students that ended with a week-long delegation trip to Taiwan.',
     tags: ['Advising', 'Leadership'],

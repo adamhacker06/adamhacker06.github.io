@@ -6,7 +6,6 @@ const LINKS = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/experience', label: 'Experience' },
-  { to: '/projects', label: 'Projects' },
   { to: '/scrapbook', label: 'Scrapbook' },
 ]
 
@@ -25,7 +24,7 @@ export default function Layout() {
   const { pathname, hash } = useLocation()
 
   // A new page starts at the top, not wherever the last one was scrolled to, unless the link
-  // points at a section on it (such as /projects#digital-erosion)
+  // points at a section on it by id (such as /page#section)
   useEffect(() => {
     const target = hash && document.getElementById(decodeURIComponent(hash.slice(1)))
     if (target) target.scrollIntoView()

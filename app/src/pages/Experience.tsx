@@ -17,6 +17,11 @@ export default function Experience() {
     <main className="xp">
       <div className="section-head">
         <h1 className="display">What I've been up to</h1>
+        {/* Says who this is for anyone who lands here first, without reading the About page */}
+        <p className="xp-lede">
+          I'm an EECS student at UC Berkeley heading into product management, and I'm happiest building tools that help
+          people learn.
+        </p>
         <p className="hand">
           <Underlined pen="amber">newest first</Underlined>
         </p>
@@ -41,7 +46,7 @@ export default function Experience() {
       </ul>
 
       <ol className="xp-timeline">
-        {ENTRIES.map((entry) => {
+        {ENTRIES.filter((entry) => !entry.minor).map((entry) => {
           const photo = photoFor(entry.id)
           return (
           <li key={entry.id} className={entry.ongoing ? 'xp-entry ongoing' : 'xp-entry'}>
@@ -82,6 +87,32 @@ export default function Experience() {
           )
         })}
       </ol>
+
+      <section className="xp-also" aria-labelledby="also-title">
+        <h2 className="display" id="also-title">
+          Also
+        </h2>
+        <ul>
+          {ENTRIES.filter((entry) => entry.minor).map((entry) => (
+            <li key={entry.id} className={entry.ongoing ? 'ongoing' : undefined}>
+              <p className="when hand">{entry.when}</p>
+              <div>
+                <h3>
+                  {entry.role} <span className="org">· {entry.org}</span>
+                </h3>
+                <p>{entry.summary}</p>
+                {entry.link?.to && (
+                  <p className="aside hand">
+                    <Link to={entry.link.to} viewTransition>
+                      {entry.link.label} <span className="go">→</span>
+                    </Link>
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section className="xp-school">
         <div className="bar" />

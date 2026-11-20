@@ -117,6 +117,3 @@ export const COVERS = {
     shot('cover-friends', 1135, 1135, 'A square cover collaged from photos of Adam with friends: graduation gowns, a car selfie, a snowman, and a circle of names around a prom photo.'),
   ],
 }
-
-// Old links such as /scrapbook#rainfall-of-babel are sent here
-export const PROJECT_IDS = new Set([...PROJECTS.map((p) => p.id), COVERS.id])
