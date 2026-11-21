@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
 import oscarCutout from '../assets/photos/oscar-cutout.webp'
 import ropesCourseCutout from '../assets/photos/ropes-course-cutout.webp'
 import mirrorSelfieLg from '../assets/home/mirror-selfie-lg.webp'
@@ -81,10 +80,7 @@ export default function Home() {
           <div className="sheet">
             <div className="paper">
               <h2>
-                {/* The heading opens the Now page, with the whole desk and past months */}
-                <Link to="/now" viewTransition>
-                  <Underlined pen="amber">right now</Underlined> <span className="go">→</span>
-                </Link>
+                <Underlined pen="amber">right now</Underlined>
               </h2>
               <Doodle shape="star" pen="amber" className="star" stretch={false} />
               <ul>

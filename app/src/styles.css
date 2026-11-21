@@ -291,10 +291,6 @@ html[data-filtering] .card { view-transition-name: var(--vt); }
 .xp-highlights li:hover, .about-small li:hover { transform: rotate(calc(var(--tilt) * -0.6)); }
 .xp-highlights .tape { width: 3.125rem; height: 0.9375rem; }
 .now h2 { margin: 0 0 0.875rem; font: inherit; font-size: 2.1rem; color: var(--marker); }
-.now h2 a { text-decoration: none; transition: color 0.15s ease-out; }
-.now h2 a:hover, .now h2 a:focus-visible { color: var(--ink); }
-.now h2 .go { display: inline-block; font-size: 1.7rem; transition: translate 0.2s ease-out; }
-.now h2 a:hover .go { translate: 0.25rem 0; }
 .now ul { margin: 0; padding: 0; list-style: none; font-size: 1.6rem; line-height: 1.25; }
 /* Each line sits at its own angle and indent, like it was jotted down at a different time */
 .now li:nth-child(1) { transform: rotate(-1.5deg); margin-left: 0.75rem; }

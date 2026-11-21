@@ -12,7 +12,9 @@ const PAGES = [
   { path: 'about', title: 'About · Adam Hacker', description: 'About Adam Hacker: a UC Berkeley student in EECS, education and design, from Visalia, California, who wants to build tools that help people learn.' },
   { path: 'experience', title: 'Experience · Adam Hacker', description: 'What Adam Hacker has been up to: a product internship at Disney, club consulting projects for Sony, Google and Adobe, and education research at UC Berkeley.' },
   {
+    // Unlisted for now: nothing links here, it is left out of the sitemap, and search engines are asked not to index it
     path: 'now',
+    noindex: true,
     title: 'Now · Adam Hacker',
     description: "What Adam Hacker is learning, building, reading, photographing and listening to this month, on a drawn desk beside his shelf of mugs and LEGO.",
   },
@@ -38,6 +40,7 @@ for (const page of PAGES) {
   html = swap(html, `content="${HOME_DESCRIPTION}"`, `content="${page.description}"`)
   html = swap(html, `rel="canonical" href="${SITE}"`, `rel="canonical" href="${SITE}${page.path}/"`)
   html = swap(html, `property="og:url" content="${SITE}"`, `property="og:url" content="${SITE}${page.path}/"`)
+  if (page.noindex) html = swap(html, '</head>', '  <meta name="robots" content="noindex" />\n  </head>')
   mkdirSync(`dist/${page.path}`, { recursive: true })
   writeFileSync(`dist/${page.path}/index.html`, html)
 }
