@@ -19,8 +19,8 @@ export default function Experience() {
         <h1 className="display">What I've been up to</h1>
         {/* Says who this is for anyone who lands here first, without reading the About page */}
         <p className="xp-lede">
-          I'm an EECS student at UC Berkeley heading into product management, and I'm happiest building tools that help
-          people learn.
+          I’m an EECS student at UC Berkeley pursuing product management, and I love building tools that help people
+          learn!
         </p>
         <p className="hand">
           <Underlined pen="amber">newest first</Underlined>
