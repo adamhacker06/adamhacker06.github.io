@@ -62,8 +62,8 @@ export const ENTRIES: Entry[] = [
     detail: 'Glendale, CA',
     when: 'May – Aug 2026',
     summary:
-      'I spent the summer on the Digital Product Optimization team, leading early work on AI agent tooling for the group that runs experimentation and testing. A lot of it was groundwork: archiving past experiments so they can be searched in plain language, and working out how the team’s records should link together in Airtable.',
-    tags: ['Product', 'AI tooling', 'Experimentation'],
+      'Disney’s experimentation team runs A/B tests for every product team, from ticketing to MagicBand, but once a test came down, what it taught was scattered across JIRA tickets and slide decks. Before building anything, I sat down with a colleague who had run the process by hand for 12 years and had seen earlier automation attempts fail. Then I prototyped and built an Airtable pipeline wired into JIRA. It tracks 80+ data points for every experiment, gives each product team a live view of its own tests, and lets anyone ask past results questions in plain English (“what have we learned about button colours?”). By August it could carry a real test end to end, and I presented it to the org’s VP.',
+    tags: ['Product discovery', 'Experimentation', 'Airtable'],
   },
   {
     id: 'sony',
