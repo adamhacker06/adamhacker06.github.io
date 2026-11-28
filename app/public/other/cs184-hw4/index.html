@@ -40,15 +40,14 @@
 
 		<figure>
 			<img src="assets/clothsim.png" alt="Cloth draped over sphere" style="width:70%"/>
-			<figcaption>You can add images with captions!</figcaption>
+			<figcaption>A cloth draped over a sphere</figcaption>
 		</figure>
 
-		<!--
-		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
-		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		In this homework, I built a real-time cloth simulator. I modeled the cloth as a grid of point masses connected by structural, shearing, and bending springs, and moved it forward in time with Verlet integration, damping, and a constraint that keeps springs from stretching more than 10% past their rest length. I then added collisions with spheres and planes, and self-collisions using a spatial hash so the cloth doesn't pass through itself. Finally, I wrote GLSL shaders for diffuse, Blinn-Phong, texture, bump, displacement, and mirror shading.
+
+		I found it really interesting how much realistic behavior comes out of such a simple model. Each spring only follows Hooke's law, but together they produce folds, draping, and wrinkles. It was also cool to see how much the parameters matter: small changes to the spring constant, density, or damping make the cloth feel like a completely different material. On the shading side, I liked seeing how bump mapping fakes surface detail just by changing normals, while displacement mapping actually moves the geometry.
 
 		<h2>Part 1: Masses and springs</h2>
 		<p>
