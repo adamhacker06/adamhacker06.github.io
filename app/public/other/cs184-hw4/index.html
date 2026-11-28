@@ -98,7 +98,7 @@
 			<li>
 				<b>Forces.</b> I reset every point mass's <code>forces</code> to the total external force \( F = m \sum a_{\text{ext}} \) (e.g. gravity).
 				Then, for each spring whose constraint type is enabled, I apply Hooke's law
-				\[ F_s = k_s \left( \lVert p_a - p_b \rVert - l \right) \]
+				\[ F_s = k_s \left( \| p_a - p_b \| - l \right) \]
 				along the direction between the two masses, adding it to one end and subtracting it from the other.
 				Bending springs use \( 0.2\,k_s \) so they are weaker than structural and shearing springs.
 			</li>
@@ -200,7 +200,7 @@
 		<p>
 			<b>Spheres.</b> A mass is inside the sphere if its distance from the center is at most the radius. In that case I find the tangent point by extending
 			the line from the center through the mass's current position out to the surface:
-			\[ p_{\text{tangent}} = c + r \, \frac{p - c}{\lVert p - c \rVert}. \]
+			\[ p_{\text{tangent}} = c + r \, \frac{p - c}{\| p - c \|}. \]
 			The correction vector is \( p_{\text{tangent}} - p_{\text{last}} \), and the new position is \( p_{\text{last}} + (1 - f)\,(p_{\text{tangent}} - p_{\text{last}}) \).
 		</p>
 		<p>
